@@ -2,3 +2,5 @@
 dist
 staging
 xulrunner
+
+config.sh
