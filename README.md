@@ -8,5 +8,6 @@ https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/
 
 # Build Instructions:
 ### IMPORTANT:
-    make a copy of config.sh.seed and name the copy config.sh before following the instructions.
+make a copy of config.sh.seed and name the copy config.sh before following the instructions.
+=====
 https://www.zotero.org/support/dev/client_coding/building_the_standalone_client#building
