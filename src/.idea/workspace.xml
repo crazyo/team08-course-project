@@ -21,11 +21,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="zoteroPane.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="zoteroPane.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/zotero/chrome/content/zotero/zoteroPane.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.025423728">
-              <caret line="1378" column="7" selection-start-line="1378" selection-start-column="7" selection-end-line="1378" selection-end-column="7" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="1639" column="59" selection-start-line="1639" selection-start-column="59" selection-end-line="1639" selection-end-column="59" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -49,7 +49,17 @@
         <entry file="file://$PROJECT_DIR$/extensions/batchediting/chrome/content/batchediting.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+              <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="overlay.xul" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/extensions/batchediting/chrome/content/overlay.xul">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.2542373">
+              <caret line="10" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -91,10 +101,10 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/modules/zotero/chrome/content/zotero/selectItemsDialog.js" />
-        <option value="$PROJECT_DIR$/extensions/batchediting/chrome/content/overlay.xul" />
         <option value="$PROJECT_DIR$/extensions/batchediting/chrome/content/include.js" />
         <option value="$PROJECT_DIR$/extensions/batchediting/chrome/content/batchediting.js" />
         <option value="$PROJECT_DIR$/modules/zotero/chrome/content/zotero/zoteroPane.js" />
+        <option value="$PROJECT_DIR$/extensions/batchediting/chrome/content/overlay.xul" />
       </list>
     </option>
   </component>
@@ -478,7 +488,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="734" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -803,14 +813,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/extensions/batchediting/chrome/content/overlay.xul">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.20373514">
-          <caret line="8" column="10" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/zotero/chrome/content/zotero/xpcom/data/itemFields.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-2.5721562">
@@ -910,14 +912,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/extensions/batchediting/chrome/content/batchediting.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/zotero/chrome/content/zotero/xpcom/zotero.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -928,11 +922,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/zotero/chrome/content/zotero/zoteroPane.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.025423728">
-          <caret line="1378" column="7" selection-start-line="1378" selection-start-column="7" selection-end-line="1378" selection-end-column="7" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1639" column="59" selection-start-line="1639" selection-start-column="59" selection-end-line="1639" selection-end-column="59" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/extensions/batchediting/chrome/content/batchediting.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/extensions/batchediting/chrome/content/overlay.xul">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2542373">
+          <caret line="10" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
+          <folding />
         </state>
       </provider>
     </entry>

@@ -4,7 +4,7 @@
 
 	<Description about="urn:mozilla:install-manifest">
 		<em:id>a@b.c</em:id>
-		<em:name>ZotLink</em:name>
+		<em:name>BatchEditing</em:name>
 		<em:version>1.0</em:version>
 		<em:type>2</em:type>
 
