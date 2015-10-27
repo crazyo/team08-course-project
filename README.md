@@ -12,8 +12,13 @@ https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/
     https://www.zotero.org/support/dev/client_coding/building_the_standalone_client#building
 3. Launch Zotero, go to Tools -> Add-ons -> Install Add-on From File..., navigate into src/extensions and choose plugins (.xpi files) to install.
     (folder with the same name as the plugin contains the source code for that plugin)
+4. Click Restart Zetoro and enjoy! 
 
 # Plugins:
 - ZotLink:
     - Prompt the user for cross-library duplication check on newly added items.
     - (To be continued...)
+
+- BatchEditing:
+    - Allow user to modify info and add/delete tags for multiple items at once. 
+    - WIP
