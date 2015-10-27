@@ -60,7 +60,7 @@ var ZotLink_Dialog = new function() {
             var newItem = new Zotero.Item;
             newItem.setType(selectedItems[i].itemTypeID);
             // add the item to the target library
-            newItem.libraryID = targetLibraryID;
+            newItem.libraryID = targetLibraryID || null;
 
             // TODO
             // add other fields as well
@@ -68,7 +68,9 @@ var ZotLink_Dialog = new function() {
 
             var id = newItem.save();
             // add the item to the target collection
-            Zotero.Collections.get(targetCollectionID).addItem(id);
+            if (targetCollectionID) {
+                Zotero.Collections.get(targetCollectionID).addItem(id);
+            }
         }
     }
 
