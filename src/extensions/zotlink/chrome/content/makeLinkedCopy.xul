@@ -4,7 +4,8 @@
 <dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
 		id="zotlink-copy-link-dialog"
 		title="Make Linked Copy" buttons="cancel,accept"
-		onload="ZotLink_Dialog.init();">
+		onload="ZotLink_Dialog.init();"
+		ondialogaccept="ZotLink_Dialog.accept();">
 
 	<script src="chrome://zotero/content/include.js"/>
 	<script src="makeLinkedCopy.js"/>
