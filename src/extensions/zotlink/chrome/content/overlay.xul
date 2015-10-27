@@ -2,6 +2,11 @@
 <overlay id="zotlink-overlay"
 		 xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
+	<menupopup id="zotero-itemmenu">
+		<menuseparator id="zotlink-separator"/>
+		<menuitem id="zotlink-copy-link" label="Make a Linked Copy to Another Library" oncommand="Zotero.ZotLink.openDialog();"/>
+	</menupopup>
+
 	<!-- gain access to the Zotero object -->
 	<script src="chrome://zotero/content/include.js"/>
 	<!-- kick off our extension -->
