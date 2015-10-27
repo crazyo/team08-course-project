@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<overlay id="batchediting-overlay"
+		 xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+
+	<groupbox id="zotero-item-pane-groupbox">
+		<tabbox id="zotero-view-tabbox" flex="1">
+			<tabs>
+				<tab label="Info"/>
+				<tab label="Tags"/>
+			</tabs>
+
+			<tabpanels id="zotero-view-item-mult" flex="1">
+				<tabpanel>
+					<zoteroitembox id="zotero-editpane-item-box-mult" flex="1"/>
+				</tabpanel>	
+				<tabpanel>
+					<tagsbox id="zotero-editpane-tags-mult" flex="1"/>
+				</tabpanel>
+			</tabpanels>
+		</tabbox>
+	</groupbox>
+
+
+	<!-- gain access to the Zotero object -->
+	<script src="chrome://zotero/content/include.js"/>
+	<!-- kick off our extension -->
+	<script src="chrome://batchediting/content/include.js"/>
+
+</overlay>
