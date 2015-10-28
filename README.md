@@ -6,6 +6,14 @@ https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/
 - Deliverable 2 Report: https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/d2.html
     (there is also a copy of everything in the repo under /project-management in case anything is broken on the website)
 
+# Build Instructions:
+1. ***Make a copy of config.sh.seed and name the copy config.sh before following the instructions.***
+2. Follow instructions to build Zotero:
+    https://www.zotero.org/support/dev/client_coding/building_the_standalone_client#building
+3. Launch Zotero, go to Tools -> Add-ons -> Install Add-on From File..., navigate into src/extensions and choose plugins (.xpi files) to install.
+    (folder with the same name as the plugin contains the source code for that plugin)
+4. Click Restart Zetoro and enjoy! 
+
 # Plugins:
 - ZotLink:
     - Prompt the user for cross-library duplication check on newly added items.
@@ -14,12 +22,3 @@ https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/
 - BatchEditing:
     - Allow user to modify info and add/delete tags for multiple items at once. 
     - WIP
-	
-- ZotCustom:
-	- Gives option to create a custom citation format when creating a new bibliography.
-	- WIP
-	
-# Installing Plugins:
-- Download and install Zotero Standalone version (https://www.zotero.org/download/)
-- Launch Zotero, go to Tools -> Add-ons -> Install Add-on From File..., Navigate to src/extensions in the repo and select plugins for installation
-- Restart Zotero and enjoy!
