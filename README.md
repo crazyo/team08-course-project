@@ -22,3 +22,7 @@ https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/
 - BatchEditing:
     - Allow user to modify info and add/delete tags for multiple items at once. 
     - WIP
+	
+- ZotCustom:
+	- Gives the user an option to create their own custom citation format when making a new bibliography.
+	- WIP
