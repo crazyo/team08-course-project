@@ -5,6 +5,7 @@ https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/
 - Deliverable 1 Report: https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/index.html
 - Deliverable 2 Report: https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/d2.html
     (there is also a copy of everything in the repo under /project-management in case anything is broken on the website)
+- **-> Deliverable 3 Report: https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/d3.html <-**
 
 # Build Instructions:
 1. ***Make a copy of config.sh.seed and name the copy config.sh before following the instructions.***
@@ -22,3 +23,7 @@ https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/
 - BatchEditing:
     - Allow user to modify info and add/delete tags for multiple items at once. 
     - WIP
+	
+- ZotCustom:
+	- Gives the user an option to create their own custom citation format when making a new bibliography.
+	- WIP

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://zotero/skin/bibliography.css"?>
+<!DOCTYPE window SYSTEM "chrome://zotero/locale/zotero.dtd">
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	title="&zotero.bibliography.title;" buttons="cancel,accept"
+	ondialogaccept="Zotero_File_Interface_Bibliography.acceptSelection()"
+	id="zotero-bibliography"
+	onload="Zotero_File_Interface_Bibliography.init()">
+
+	<script src="include.js"/>
+	<script src="bibliography.js"/>
+	
+	<vbox id="zotero-bibliography-container">
+		<button id="custom" label="Custom Citation"/>
+	</vbox>
+</dialog>
