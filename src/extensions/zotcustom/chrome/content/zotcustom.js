@@ -1,36 +1,7 @@
 /*
-    ***** BEGIN LICENSE BLOCK *****
-    
-    Copyright © 2009 Center for History and New Media
-                     George Mason University, Fairfax, Virginia, USA
-                     http://zotero.org
-    
-    This file is part of Zotero.
-    
-    Zotero is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-    
-    Zotero is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-    
-    You should have received a copy of the GNU Affero General Public License
-    along with Zotero.  If not, see <http://www.gnu.org/licenses/>.
-    
-    ***** END LICENSE BLOCK *****
+	Bibliography file with Custom Citation Format extension modifications.
+	All changes made for the extension are prepended with a comment starting with 'CCF'.
 */
-
-//////////////////////////////////////////////////////////////////////////////
-//
-// Zotero_File_Interface_Bibliography
-//
-//////////////////////////////////////////////////////////////////////////////
-
-// Class to provide options for bibliography
-// Used by rtfScan.xul, integrationDocPrefs.xul, and bibliography.xul
 
 var Zotero_File_Interface_Bibliography = new function() {
 	var _io;
@@ -43,6 +14,17 @@ var Zotero_File_Interface_Bibliography = new function() {
 	 * Initialize some variables and prepare event listeners for when chrome is done
 	 * loading
 	 */
+	 
+	 /* CCF
+	  *	Delete original groupboxes and items in bibliography creation menu, in order to
+	  *	allow the insertion of custom elements inside existing groupboxes (which had no IDs).
+	  */
+	 var index;
+	 var boxes = document.getElementsByTagName( "groupbox" );
+	 for (index = 0; index < 4; ++index) {
+		boxes[0].remove();
+	 }
+	 
 	this.init = function () {
 		// Set font size from pref
 		// Affects bibliography.xul and integrationDocPrefs.xul
