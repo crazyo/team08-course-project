@@ -38,7 +38,7 @@ Zotero.ZotLink = {
                 sql = "DELETE FROM links WHERE item1id IN (" + ids + ") OR item2id IN (" + ids + ");";
                 zotlink.DB.query(sql);
                 // also update the cache to reduce database access
-                for (i = zotlink.links.length - 1; i >= 0; i--) {
+                for (var i = zotlink.links.length - 1; i >= 0; i--) {
                     if (ids.indexOf(zotlink.links[i][0]) !== -1 || ids.indexOf(zotlink.links[i][1] !== -1)) {
                         zotlink.links.splice(i, 1);
                     }
