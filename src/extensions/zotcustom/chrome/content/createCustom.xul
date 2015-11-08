@@ -6,28 +6,21 @@
 		title="Custom Citation" buttons="cancel,accept">
 
 	<script src="chrome://zotero/content/include.js"/>
-	<script src="createCustom.js"/>
+	<script src="chrome://zotcustom/content/createCustom.js"/>
 	
 	<vbox style="box-align: center; box-pack: center; 
-                 width: 300px; height: 300px">
-		<label value="Select order of forms (the options will need to be updated)"/>
+                 width: 300px; height: 100px">
+		<label value="Keep selecting forms (the options will need to be updated)"/>
 		<hbox>
-			<label value="1."/>
+			<label value="Fields:"/>
 			<menulist id="zotc1" style="width: 100px">
-				<menupopup id="zotc1">
-					<menuitem label="Author"/>
-					<menuitem label="Abstract"/>
-					<menuitem label="Series"/>
+				<menupopup id="zotc2" oncommand="ZotCustom.inputSelection();">
+					<menuitem label="Author" value="Author"/>
+					<menuitem label="Abstract" value="Abstract"/>
+					<menuitem label="Series" value="Series"/>
 				</menupopup>
 			</menulist>
 		</hbox>
-		<hbox>
-			<label value="2."/>
-			<menulist id="zotc2" style="width: 100px">
-				<menupopup id="zotc2"/>
-			</menulist>
-		</hbox>
 	</vbox>
-	<textbox id="new citation"/>
-	<button id="display" label="display new citation"/>
+	<textbox id="newcitation" value=""/>
 </dialog>
