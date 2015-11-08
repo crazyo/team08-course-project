@@ -8,11 +8,9 @@
 	<script src="chrome://zotero/content/include.js"/>
 	<script src="chrome://zotcustom/content/createCustom.js"/>
 	
-	<vbox style="box-align: center; box-pack: center; 
-                 width: 300px; height: 100px">
-		<label value="Keep selecting forms (the options will need to be updated)"/>
-		<hbox>
-			<label value="Fields:"/>
+	<vbox style="box-align: center; box-pack: center; width: 300px; height: 100px">
+		<groupbox>
+			<caption label="Available Fields"/>
 			<menulist id="zotc1" style="width: 100px">
 				<menupopup id="zotc2" oncommand="ZotCustom.inputSelection();">
 					<menuitem label="Author" value="Author"/>
@@ -20,7 +18,8 @@
 					<menuitem label="Series" value="Series"/>
 				</menupopup>
 			</menulist>
-		</hbox>
+		</groupbox>
+		
+		<textbox id="newcitation" value="" onblur="ZotCustom.saveCaret();" onfocus="ZotCustom.setCaret();"/>
 	</vbox>
-	<textbox id="newcitation" value=""/>
 </dialog>
