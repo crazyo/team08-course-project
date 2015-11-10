@@ -5,30 +5,29 @@ Zotero.BatchEditing = {
         var itempane = document.getElementById('otero-item-pane-content');
         var ZoteroPane = Components.classes["@mozilla.org/appshell/window-mediator;1"].getService(Components.interfaces.nsIWindowMediator).getMostRecentWindow("navigator:browser").ZoteroPane;
 
-        Object.observe(ZoteroPane.itemsView.selection.count, function(){
-          ps.confirm(window, "Duplication Check", "abc");
-        })
+        if (ZoteroPane.itemsView.selection.count > 1){
+            ps.confirm(window, "Duplication Check", ZoteroPane.itemsView.selection.count);
+        }
         window.addEventListener("unload", function() {
             Zotero.Notifier.unregisterObserver(observerID);
         });
+    },
+
+
+
+    edittags: function(){
+        var selectedItems = ZoteroPane.getSelectedItems();
+        window.openDialog("chrome://batchediting/content/batchtags.xul",
+                          "",
+                          "chrome,centerscreen,modal,resizable=no",
+                          selectedItems);
     },
 
     observer: {
         notify: function(event, type, ids, extra) {
 
 
-
-            if (ZoteroPane.itemsView.selection.count > 1){
-                var ps = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
-                                   .getService(Components.interfaces.nsIPromptService);
-                ps.confirm(window, "Duplication Check", a[0]);
-            }
-
-
-            if (event === "add") {
-
-
-
+            if (event === "add" || event == 'modify' || event == 'delete') {
                 var a = ZoteroPane.getSelectedItems();
                 var ps = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
                                    .getService(Components.interfaces.nsIPromptService);

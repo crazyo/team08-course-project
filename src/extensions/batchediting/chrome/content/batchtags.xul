@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+
+
+	<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+			id="batch-edit-tags-dialog"
+			title="Edit Tags" buttons="cancel,accept"
+			onload="BatchTags.init();"
+			ondialogaccept="BatchTags.accept();">
+
+		<script src="chrome://zotero/content/include.js"/>
+		<script src="batchediting.js"/>
+		<script src="batchtags.js"/>
+
+		<vbox>
+
+			<button id="add-tags-button">
+				Add
+			</button>
+		</vbox>
+	</dialog>
