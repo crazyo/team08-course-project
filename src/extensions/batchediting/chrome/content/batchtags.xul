@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
-
-
 	<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
 			id="batch-edit-tags-dialog"
 			title="Edit Tags" buttons="cancel,accept"
@@ -14,5 +12,10 @@
 			<groupbox id="tag-batch">
 				<checkbox label="test"/>
 			</groupbox>
+			<button id="add-tags-button" onclick="BatchTags.showAddTag()">
+				Add New Tag
+			</button>
+			<input id="add-tags-name" type="text" name="FirstName" visible="false" value="Mickey">
+			</input>
 		</vbox>
 	</dialog>

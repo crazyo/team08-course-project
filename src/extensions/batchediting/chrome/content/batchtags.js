@@ -19,3 +19,26 @@ var BatchTags = new function() {
         }
     }
 };
+        var tagsDialog = document.getElementById("batch-edit-tags-dialog");
+        document.getElementById("add-tags-name").setAttribute("visible", "true");
+
+    },
+
+
+
+
+    function showAddTag(){
+        document.getElementById("add-tags-name").setAttribute("visible", "true");
+    },
+
+    function submit(){
+
+    },
+
+    function accept(){
+        var ps = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
+        .getService(Components.interfaces.nsIPromptService);
+
+        ps.confirm(window, "Duplication Check", ZoteroPane.itemsView.selection.count);
+    },
+};
