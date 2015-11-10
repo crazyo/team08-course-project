@@ -1,7 +1,7 @@
 Zotero.ZotLink = {
     DB: null,
     // cache database invoking result to reduce database-access overhead
-    links: [],
+    links: null,
 
     // current observerID
     observerID: null,
@@ -17,9 +17,7 @@ Zotero.ZotLink = {
         // retrieve data from database, store in cache
         var sql = "SELECT * FROM links;";
         var rows = this.DB.query(sql);
-        for (var i = 0; i < rows.length; i++) {
-            this.links.push([Number(rows[i].item1id), Number(rows[i].item2id)]);
-        }
+        this.links = new _LinkGraph(rows);
 
         this.observerID = Zotero.Notifier.registerObserver(this.observer, ["item"]);
 
@@ -38,10 +36,8 @@ Zotero.ZotLink = {
                 sql = "DELETE FROM links WHERE item1id IN (" + ids + ") OR item2id IN (" + ids + ");";
                 zotlink.DB.query(sql);
                 // also update the cache to reduce database access
-                for (var i = zotlink.links.length - 1; i >= 0; i--) {
-                    if (ids.indexOf(zotlink.links[i][0]) !== -1 || ids.indexOf(zotlink.links[i][1] !== -1)) {
-                        zotlink.links.splice(i, 1);
-                    }
+                for (var i = 0; i < ids.length; i++) {
+                    zotlink.links.removeLinks(ids[i]);
                 }
             }
             else if (event === "modify") {
@@ -52,15 +48,9 @@ Zotero.ZotLink = {
                     var source = Zotero.Items.get(id);
 
                     // change all items that are linked to this item
-                    var target;
-                    for (var j = 0; j < zotlink.links.length; j++) {
-                        if (zotlink.links[j][0] !== id && zotlink.links[j][1] !== id) {
-                            continue;
-                        }
-
-                        target = zotlink.links[j][0] === id ?
-                                 Zotero.Items.get(zotlink.links[j][1]) :
-                                 Zotero.Items.get(zotlink.links[j][0]);
+                    var targets = zotlink.links.findLinks(id);
+                    for (var j = 0; j < targets.length; j++) {
+                        var target = Zotero.Items.get(targets[j]);
 
                         // temporarily stop listening to events
                         Zotero.Notifier.unregisterObserver(zotlink.observerID);
@@ -108,7 +98,7 @@ Zotero.ZotLink = {
         var sql = "INSERT INTO links VALUES (" + source.id + ", " + newItemID + ");";
         this.DB.query(sql);
         // also update the cache to reduce database access
-        this.links.push([source.id, newItemID]);
+        this.links.addLink([source.id, newItemID]);
 
         // resume listening to events
         this.observerID = Zotero.Notifier.registerObserver(this.observer, ["item"]);
@@ -122,3 +112,87 @@ Zotero.ZotLink = {
 };
 
 window.addEventListener("load", function() { Zotero.ZotLink.init(); });
+
+
+function _LinkGraph(pairs) {
+    // build graph (as an adjacency list)
+    this.graph = {};
+    _buildGraph(pairs);
+
+    this.addLink = function(pair) {
+        var item1id = pair[0],
+            item2id = pair[1];
+
+        if (!this.graph.hasOwnProperty(item1id)) {
+            this.graph[item1id] = [item2id];
+        }
+        else {
+            this.graph[item1id].push(item2id);
+        }
+        if (!this.graph.hasOwnProperty(item2id)) {
+            this.graph[item2id] = [item1id];
+        }
+        else {
+            this.graph[item2id].push(item1id);
+        }
+    };
+
+    // find id of all linked items to the given item using BFS
+    this.findLinks = function(itemid) {
+        var tovisit = [itemid],
+            visted  = [];
+
+        while (tovisit.length) {
+            var current = tovisit.shift();
+            visted.push(current);
+
+            if (!this.graph[current]) {
+                continue;
+            }
+
+            for (var i = 0; i < this.graph[current].length; i++) {
+                var candidate = this.graph[current][i];
+                if (tovisit.indexOf(candidate) === -1 &&
+                    visted.indexOf(candidate)  === -1) {
+                    tovisit.push(candidate);
+                }
+            }
+        }
+
+        // the first item in the visited list is the given item itself
+        visted.shift();
+        return visted;
+    };
+
+    // remove all links to the item
+    this.removeLinks = function(itemid) {
+        if (!this.graph[itemid]) {
+            return;
+        }
+
+        delete this.graph[itemid];
+        for (var source in this.graph) {
+            // skip if the current property is not an item
+            if (!this.graph.hasOwnProperty(source)) {
+                continue;
+            }
+
+            for (var j = 0; j < this.graph[source].length; j++) {
+                if (this.graph[source][j] === itemid) {
+                    this.graph[source].splice(j, 1);
+                    break;
+                }
+            }
+            // delete the list if it becomes empty
+            if (!this.graph[source].length) {
+                delete this.graph[source];
+            }
+        }
+    };
+
+    function _buildGraph(pairs) {
+        for (var i = 0; i < pairs; i++) {
+            this.addLink(pairs[i]);
+        }
+    }
+}
