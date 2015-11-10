@@ -5,6 +5,7 @@ https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/
 - Deliverable 1 Report: https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/index.html
 - Deliverable 2 Report: https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/d2.html
     (there is also a copy of everything in the repo under /project-management in case anything is broken on the website)
+- **-> Deliverable 3 Report: https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/d3.html <-**
 
 # Build Instructions:
 1. ***Make a copy of config.sh.seed and name the copy config.sh before following the instructions.***
@@ -16,9 +17,15 @@ https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/
 
 # Plugins:
 - ZotLink:
-    - Prompt the user for cross-library duplication check on newly added items.
-    - (To be continued...)
+    - Integrates an option into the right click context menu that enables the user to make a linked copy of the seleted item(s) to another library.
+    - Clicking on that option fires up a dialog for the user to choose the destination library and collection.
+    - By hiting OK, a copy of the selected item(s) will be generated in the target library and the target collection.
+    - WIP (To link the copy to the original item.)
 
 - BatchEditing:
     - Allow user to modify info and add/delete tags for multiple items at once. 
     - WIP
+	
+- ZotCustom:
+	- Gives the user an option to create their own custom citation format when making a new bibliography.
+	- WIP

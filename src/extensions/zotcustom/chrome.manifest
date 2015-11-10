@@ -1,0 +1,2 @@
+content     zotcustom    chrome/content/
+overlay chrome://zotero/content/bibliography.xul chrome://zotcustom/content/sample.xul

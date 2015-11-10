@@ -6,6 +6,7 @@ var ZotLink_Dialog = new function() {
     this._librarySelections = [];
     this._collectionSelections = [];
 
+
     function init() {
         var selectedItems = window.arguments[0];
         var libraryListMenu = document.getElementById("zotlink-dialog-library-list");
@@ -55,23 +56,7 @@ var ZotLink_Dialog = new function() {
         var selectedItems = window.arguments[0];
         var targetLibraryID = this._librarySelections[document.getElementById("zotlink-dialog-library-list-menu").selectedIndex];
         var targetCollectionID = this._collectionSelections[document.getElementById("zotlink-dialog-collection-list-menu").selectedIndex];
-
-        for (var i = 0; i < selectedItems.length; i++) {
-            var newItem = new Zotero.Item;
-            newItem.setType(selectedItems[i].itemTypeID);
-            // add the item to the target library
-            newItem.libraryID = targetLibraryID || null;
-
-            // TODO
-            // add other fields as well
-            newItem.setField("title", selectedItems[i].getField("title"));
-
-            var id = newItem.save();
-            // add the item to the target collection
-            if (targetCollectionID) {
-                Zotero.Collections.get(targetCollectionID).addItem(id);
-            }
-        }
+        Zotero.ZotLink.createLinkedCopies(selectedItems, targetLibraryID, targetCollectionID);
     }
 
     function updateCollections() {
