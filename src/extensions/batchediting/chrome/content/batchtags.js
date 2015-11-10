@@ -1,19 +1,21 @@
 var BatchTags = new function() {
-    var tagsDialog = document.getElementById("batch-edit-tags-dialog");
-    var ps = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
-                                   .getService(Components.interfaces.nsIPromptService);
-
     this.init = init;
-    this.accept = accept;
-
 
     function init() {
-        var btn = document.createElement("menuitem");        // Create a <button> elementxwx
-        btn.setTextContent("Add Tags");
-        tagsDialog.appendChild(btn);
-    }
+        var group = document.getElementById("tag-batch");
+        var tagnames = [];
+        var tags = Zotero.Tags.getAll();
+        for (var item in tags) {
+            if (!tags.hasOwnProperty(item)) {
+                continue;
+            }
 
-    function accept(){
-        ps.confirm(window, "Duplication Check", ZoteroPane.itemsView.selection.count);
+            tagnames.push(tags[item].name);
+        }
+        for (var i = 0; i < tagnames.length; i++) {
+            var tagbox = document.createElement("checkbox");
+            tagbox.setAttribute("label", tagnames[i]);
+            group.appendChild(tagbox);
+        }
     }
 };

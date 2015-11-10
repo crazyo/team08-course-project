@@ -2,51 +2,6 @@
 <overlay id="batchediting-overlay"
 		 xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-
-	<menupopup id="zotero-itemmenu">
-		<menuseparator id="batch-separator"/>
-		<menuitem id="batch-edit-tags" label="Batch Edit Tags" oncommand="Zotero.BatchEditing.edittags();"/>
-	</menupopup>
-
-
-<!-- 
-	<groupbox id="zotero-item-pane-groupbox">
-		<tabbox id="zotero-view-tabbox" flex="1">
-			<tabs>
-				<tab label="Info"/>
-				<tab label="Tags"/>
-			</tabs>
-
-			<tabpanels id="zotero-view-item-mult" flex="1">
-				<tabpanel>
-					<zoteroitembox id="zotero-editpane-item-box-mult" flex="1"/>
-				</tabpanel>	
-				<tabpanel>
-					<tagsbox id="zotero-editpane-tags-mult" flex="1"/>
-				</tabpanel>
-			</tabpanels>
-		</tabbox>
-	</groupbox> -->
-
-	<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
-			id="batch-edit-tags-dialog"
-			title="Edit Tags" buttons="cancel,accept"
-			onload="BatchTags.init();"
-			ondialogaccept="BatchTags.accept();">
-
-		<script src="chrome://zotero/content/include.js"/>
-		<script src="batchediting.js"/>
-		<script src="batchtags.js"/>
-
-		<vbox>
-
-			<button id="add-tags-button">
-				Add
-			</button>
-		</vbox>
-	</dialog>
-
-
 	<!-- gain access to the Zotero object -->
 	<script src="chrome://zotero/content/include.js"/>
 	<!-- kick off our extension -->
