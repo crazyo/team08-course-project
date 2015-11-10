@@ -13,13 +13,12 @@
 			<caption label="Available Fields"/>
 			<menulist id="zotc1" style="width: 100px">
 				<menupopup id="zotc2" oncommand="ZotCustom.inputSelection();">
-					<menuitem label="Author" value="Author"/>
-					<menuitem label="Abstract" value="Abstract"/>
-					<menuitem label="Series" value="Series"/>
+					<menuitem label="i" value="test"/>
 				</menupopup>
 			</menulist>
 		</groupbox>
 		
 		<textbox id="newcitation" value="" onblur="ZotCustom.saveCaret();" onfocus="ZotCustom.setCaret();"/>
+		<button id="c" label="click" oncommand="ZotCustom.updateList();"/>
 	</vbox>
 </dialog>

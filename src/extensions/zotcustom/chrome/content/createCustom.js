@@ -1,7 +1,16 @@
 var ZotCustom = new function() {
+	
 	//update the ddl based on items forms
 	this.updateList = function(){
-	};
+		var tree = document.getElementById("tree");
+		var io = {singleSelection:true};
+		window.openDialog('chrome://zotero/content/selectItemsDialog.xul', '', 'chrome,modal', io);
+			var selectedItemID = io.dataOut[0];
+			var selectedItem = Zotero.Items.get(selectedItemID);
+			var title = selectedItem.getField("title");
+			var mylist = document.getElementById("zotc1");
+			mylist.appendItem("title: " + title, "title");
+	}
 	
 	var caretPos = 0;	// Keeps track of cursor position in textbox
 	
@@ -52,6 +61,7 @@ var ZotCustom = new function() {
 	
 	// Drop-down selection function
 	this.inputSelection = function(){
+		//updateList.call();
 		var mylist = document.getElementById("zotc1");
 		var textbox = document.getElementById("newcitation")
 		
