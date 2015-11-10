@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+		id="zotcustom"
+		title="Custom Citation" buttons="cancel,accept">
+
+	<script src="chrome://zotero/content/include.js"/>
+	<script src="chrome://zotcustom/content/createCustom.js"/>
+	
+	<vbox style="box-align: center; box-pack: center; width: 300px; height: 100px">
+		<groupbox>
+			<caption label="Available Fields"/>
+			<menulist id="zotc1" style="width: 100px">
+				<menupopup id="zotc2" oncommand="ZotCustom.inputSelection();">
+					<menuitem label="i" value="test"/>
+				</menupopup>
+			</menulist>
+		</groupbox>
+		
+		<textbox id="newcitation" value="" onblur="ZotCustom.saveCaret();" onfocus="ZotCustom.setCaret();"/>
+		<button id="c" label="click" oncommand="ZotCustom.updateList();"/>
+	</vbox>
+</dialog>
