@@ -29,3 +29,5 @@ https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/
 - ZotCustom:
 	- Gives the user an option to create their own custom citation format when making a new bibliography.
 	- WIP
+- ZotCustom_fields:
+	-Allows users to create their own forms with their own custom fields.
