@@ -24,7 +24,11 @@ https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/
 
 - BatchEditing:
     - Allow user to modify info and add/delete tags for multiple items at once. 
-    - WIP
+    - Click the icon right to the tags search bar(bottom left of UI), it will bring up a context menu.
+    - Select batch edit tags, it opens up a dialog. Right now it's able to show what tags are currently in the library.
+    - WIP (merge & batch add more tags).
+
+
 	
 - ZotCustom:
 	- Gives the user an option to create their own custom citation format when making a new bibliography.
