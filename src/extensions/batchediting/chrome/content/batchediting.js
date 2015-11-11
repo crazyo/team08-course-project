@@ -1,40 +1,23 @@
 Zotero.BatchEditing = {
 
     init: function() {
-        var observerID = Zotero.Notifier.registerObserver(this.observer, ["item"]);
-        var itempane = document.getElementById('otero-item-pane-content');
-        var ZoteroPane = Components.classes["@mozilla.org/appshell/window-mediator;1"].getService(Components.interfaces.nsIWindowMediator).getMostRecentWindow("navigator:browser").ZoteroPane;
+        var tagmenu = document.getElementById("view-settings-popup");
+        var batchedit = document.createElement("menuitem");
+        batchedit.setAttribute("label", "batch edit tags");
+        batchedit.setAttribute("oncommand", "Zotero.BatchEditing.openDialog();");
+        tagmenu.appendChild(batchedit);
 
-        Object.observe(ZoteroPane.itemsView.selection.count, function(){
-          ps.confirm(window, "Duplication Check", "abc");
-        })
+        var observerID = Zotero.Notifier.registerObserver(this.observer, ["item"]);
+
         window.addEventListener("unload", function() {
             Zotero.Notifier.unregisterObserver(observerID);
         });
     },
 
-    observer: {
-        notify: function(event, type, ids, extra) {
-
-
-
-            if (ZoteroPane.itemsView.selection.count > 1){
-                var ps = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
-                                   .getService(Components.interfaces.nsIPromptService);
-                ps.confirm(window, "Duplication Check", a[0]);
-            }
-
-
-            if (event === "add") {
-
-
-
-                var a = ZoteroPane.getSelectedItems();
-                var ps = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
-                                   .getService(Components.interfaces.nsIPromptService);
-                ps.confirm(window, "Duplication Check", ZoteroPane.itemsView.selection.count);
-            }
-        },
+    openDialog: function(){
+        window.openDialog("chrome://batchediting/content/batchtags.xul",
+                          "",
+                          "chrome,centerscreen,modal,resizable=no");
     },
 };
 
