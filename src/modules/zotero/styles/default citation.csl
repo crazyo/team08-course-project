@@ -4,7 +4,6 @@
     <title>Default Citation</title>
     <id>http://www.zotero.org/styles/default</id>
     <link href="http://www.zotero.org/styles/default" rel="self"/>
-    <link href="http://www.default.com/default/authors/gta/index.html#a5.4" rel="documentation"/>
     <author>
       <name>Wei Cong Su</name>
       <email>alexx.su@mail.utoronto</email>
@@ -14,8 +13,6 @@
     <category field="generic-base"/>
     <issn>0028-0836</issn>
     <eissn>1476-4687</eissn>
-    <updated>2014-06-22T03:46:28+00:00</updated>
-    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <macro name="title">
     <choose>
