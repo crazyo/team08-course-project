@@ -11,14 +11,13 @@
 	<vbox style="box-align: center; box-pack: center; width: 300px; height: 100px">
 		<groupbox>
 			<caption label="Available Fields"/>
-			<menulist id="zotc1" style="width: 100px">
-				<menupopup id="zotc2" oncommand="ZotCustom.inputSelection();">
-					<menuitem label="i" value="test"/>
+			<menulist id="citationDDL" style="width: 100px">
+				<menupopup id="citationpop" oncommand="ZotCustom.inputSelection();">
 				</menupopup>
 			</menulist>
 		</groupbox>
 		
-		<textbox id="newcitation" value="" onblur="ZotCustom.saveCaret();" onfocus="ZotCustom.setCaret();"/>
+		<textbox id="newCitation" value="" onblur="ZotCustom.saveCaret();" onfocus="ZotCustom.setCaret();"/>
 		<button id="c" label="click" oncommand="ZotCustom.updateList();"/>
 	</vbox>
 </dialog>

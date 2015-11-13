@@ -1,15 +1,29 @@
 var ZotCustom = new function() {
 	
 	//update the ddl based on items forms
+    //can probly use getUsedFields from items.js
 	this.updateList = function(){
-		var tree = document.getElementById("tree");
 		var io = {singleSelection:true};
 		window.openDialog('chrome://zotero/content/selectItemsDialog.xul', '', 'chrome,modal', io);
-			var selectedItemID = io.dataOut[0];
-			var selectedItem = Zotero.Items.get(selectedItemID);
-			var title = selectedItem.getField("title");
-			var mylist = document.getElementById("zotc1");
-			mylist.appendItem("title: " + title, "title");
+		var selectedItemID = io.dataOut[0];
+		var selectedItem = Zotero.Items.get(selectedItemID);
+		var mylist = document.getElementById("citationDDL");
+		// Insert fields w/ values for selected item
+		var i;
+		for (i in selectedItem._itemData) {
+            var name = Zotero.ItemFields.getName(i);
+			var val = selectedItem.getField(i);
+            //check if field has a value
+			if(val != ""){
+				mylist.appendItem(name + ": " + val, "nameVal");
+			}
+            //not too sure bout this prt..
+			if (name == 'version') {
+				// Changed in API v3 to avoid clash with 'version' above
+				// Remove this after https://github.com/zotero/zotero/issues/670
+				name = 'versionNumber';
+			}
+		}
 	}
 	
 	var caretPos = 0;	// Keeps track of cursor position in textbox
