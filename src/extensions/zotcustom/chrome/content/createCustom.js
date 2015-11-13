@@ -15,7 +15,7 @@ var ZotCustom = new function() {
 			var val = selectedItem.getField(i);
             //check if field has a value
 			if(val != ""){
-				mylist.appendItem(name + ": " + val, "nameVal");
+				mylist.appendItem(name + ": " + val, name);
 			}
             //not too sure bout this prt..
 			if (name == 'version') {
