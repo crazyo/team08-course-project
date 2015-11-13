@@ -1,13 +1,19 @@
 var ZotCustom = new function() {
 	
+	var caretPos = 0;			// Keeps track of cursor position in textbox
+	var listUpdated = false;	// Checks if drop down has already been updated
+	
 	//update the ddl based on items forms
-    //can probly use getUsedFields from items.js
+    //can probably use getUsedFields from items.js
 	this.updateList = function(){
+		// If the list has already been updated, don't do it again.
+		if (listUpdated) return;
+		
 		var io = {singleSelection:true};
 		window.openDialog('chrome://zotero/content/selectItemsDialog.xul', '', 'chrome,modal', io);
 		var selectedItemID = io.dataOut[0];
 		var selectedItem = Zotero.Items.get(selectedItemID);
-		var mylist = document.getElementById("citationDDL");
+		var mylist = document.getElementById("fields-drop-down");
 		// Insert fields w/ values for selected item
 		var i;
 		for (i in selectedItem._itemData) {
@@ -24,9 +30,10 @@ var ZotCustom = new function() {
 				name = 'versionNumber';
 			}
 		}
+		
+		// Set list to updated
+		if (selectedItem) listUpdated = true;
 	}
-	
-	var caretPos = 0;	// Keeps track of cursor position in textbox
 	
 	/*
 	 * Returns the caret (cursor) position of the specified text field.
@@ -75,9 +82,8 @@ var ZotCustom = new function() {
 	
 	// Drop-down selection function
 	this.inputSelection = function(){
-		//updateList.call();
-		var mylist = document.getElementById("zotc1");
-		var textbox = document.getElementById("newcitation")
+		var mylist = document.getElementById("fields-drop-down");
+		var textbox = document.getElementById("new-citation-format")
 		
 		// Insert 'insert' between 'front' and 'back'
 		var insert = "{" + mylist.selectedItem.value + "}"
@@ -90,11 +96,11 @@ var ZotCustom = new function() {
 	
 	// Textbox blurred function
 	this.saveCaret = function(){
-		caretPos = getCaretPos(document.getElementById("newcitation"))		//Remember cursor location for later use
+		caretPos = getCaretPos(document.getElementById("new-citation-format"))		//Remember cursor location for later use
 	};
 	
 	// Textbox focused function
 	this.setCaret = function(){
-		setCaretPos ("newcitation", caretPos);								// Set cursor to previous location
+		setCaretPos ("new-citation-format", caretPos);								// Set cursor to previous location
 	};
 }

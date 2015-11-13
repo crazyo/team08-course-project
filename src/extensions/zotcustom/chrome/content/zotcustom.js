@@ -1,6 +1,5 @@
 /*
 	Bibliography file with Custom Citation Format extension modifications.
-	All changes made for the extension are prepended with a comment starting with 'CCF'.
 */
 
 var Zotero_File_Interface_Bibliography = new function() {
@@ -15,7 +14,7 @@ var Zotero_File_Interface_Bibliography = new function() {
 	 * loading
 	 */
 	 
-	 /* CCF
+	 /*
 	  *	Delete original groupboxes and items in bibliography creation menu, in order to
 	  *	allow the insertion of custom elements inside existing groupboxes (which had no IDs).
 	  */

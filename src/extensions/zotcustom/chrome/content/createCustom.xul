@@ -8,16 +8,16 @@
 	<script src="chrome://zotero/content/include.js"/>
 	<script src="chrome://zotcustom/content/createCustom.js"/>
 	
-	<vbox style="box-align: center; box-pack: center; width: 300px; height: 100px">
+	<vbox style="box-align: center; box-pack: center; width: 400px; height: 150px">
 		<groupbox>
 			<caption label="Available Fields"/>
-			<menulist id="citationDDL" style="width: 100px">
-				<menupopup id="citationpop" oncommand="ZotCustom.inputSelection();">
+			<menulist id="fields-drop-down" onfocus="ZotCustom.updateList();">
+				<menupopup id="fields-menu-popup" oncommand="ZotCustom.inputSelection();">
 				</menupopup>
 			</menulist>
 		</groupbox>
 		
-		<textbox id="newCitation" value="" onblur="ZotCustom.saveCaret();" onfocus="ZotCustom.setCaret();"/>
-		<button id="c" label="click" oncommand="ZotCustom.updateList();"/>
+		<label value="Custom Format:"/>
+		<textbox id="new-citation-format" value="" onblur="ZotCustom.saveCaret();" onfocus="ZotCustom.setCaret();"/>
 	</vbox>
 </dialog>
