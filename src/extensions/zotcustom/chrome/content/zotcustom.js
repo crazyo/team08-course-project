@@ -213,6 +213,12 @@ var Zotero_File_Interface_Bibliography = new function() {
 			lastSelectedLocale
 		);
 	}
+	
+    this.openDialog = function() {
+        window.openDialog("chrome://zotcustom/content/createCustom.xul",
+                          "",
+                          "chrome,centerscreen,modal,resizable=no");
+    }
 
 	this.acceptSelection = function () {
 		// collect code

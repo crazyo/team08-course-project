@@ -8,16 +8,26 @@
 	<script src="chrome://zotero/content/include.js"/>
 	<script src="chrome://zotcustom/content/createCustom.js"/>
 	
-	<vbox style="box-align: center; box-pack: center; width: 400px; height: 150px">
+	<vbox style="box-align: center; box-pack: center; width: 400px; height: 200px">
 		<groupbox>
-			<caption label="Available Fields"/>
+			<caption label="Available Fields:"/>
 			<menulist id="fields-drop-down" onfocus="ZotCustom.updateList();">
 				<menupopup id="fields-menu-popup" oncommand="ZotCustom.inputSelection();">
 				</menupopup>
 			</menulist>
 		</groupbox>
+		<description>  </description>
 		
-		<label value="Custom Format:"/>
-		<textbox id="new-citation-format" value="" onblur="ZotCustom.saveCaret();" onfocus="ZotCustom.setCaret();"/>
+		<groupbox>
+			<caption label="Custom Format:"/>
+			<textbox id="new-citation-format" value="" multiline = "true" onblur="ZotCustom.saveCaret();" onfocus="ZotCustom.setCaret();" oninput="ZotCustom.updateDisplay();"/>
+			<description> Use the drop-down menu to place item fields. Type your own punctuation marks and other characters in the text box above. </description>
+		</groupbox>
+		<description>  </description>
+		
+		<groupbox>
+			<caption label="Here's what your format currently looks like:"/>
+			<textbox id="new-citation-display" value="" multiline = "true" readonly = "true"/>
+		</groupbox>
 	</vbox>
 </dialog>
