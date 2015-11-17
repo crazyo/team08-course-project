@@ -35,6 +35,12 @@ var ZotCustom = new function() {
 		// Set list to updated
 		if (selectedItem) listUpdated = true;
 	}
+    //save the new citation and add it to the list of citation styles
+    this.saveCitation = function() {
+        var citation = document.getElementById("newCitationName");
+        var styleList = opener.document.getElementById("style-listbox");
+        styleList.appendItem(citation.value);
+    }
 	
 	/*
 	 * Returns the caret (cursor) position of the specified text field.
