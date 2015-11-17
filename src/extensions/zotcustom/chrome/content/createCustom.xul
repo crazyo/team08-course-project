@@ -29,8 +29,7 @@
 			<caption label="Here's what your format currently looks like:"/>
 			<textbox id="new-citation-display" value="" multiline = "true" readonly = "true"/>
 			<vbox align="right">
-				<textbox id="newCitationName" label="" width="200"/>
-				<button id="save-custom" label="Save" width="60" oncommand="ZotCustom.saveCitation()"/>
+				<button id="save-custom" label="Save" width="60" oncommand="ZotCustom.saveCitation();"/>
 			</vbox>
 		</groupbox>
 	</vbox>

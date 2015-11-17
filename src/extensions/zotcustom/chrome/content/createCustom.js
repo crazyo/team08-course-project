@@ -35,11 +35,16 @@ var ZotCustom = new function() {
 		// Set list to updated
 		if (selectedItem) listUpdated = true;
 	}
+	
     //save the new citation and add it to the list of citation styles
     this.saveCitation = function() {
-        var citation = document.getElementById("newCitationName");
         var styleList = opener.document.getElementById("style-listbox");
-        styleList.appendItem(citation.value);
+		var output = document.getElementById("new-citation-display");
+		
+		window.openDialog("chrome://zotcustom/content/saveCustom.xul",
+                          "",
+                          "chrome,centerscreen,modal,resizable=no",
+						  styleList, output);
     }
 	
 	/*
