@@ -120,6 +120,8 @@ var ZotCustom = new function() {
 		for (i = 0; i < textbox.value.length; i++) {
 			var ichar = textbox.value.charAt(i)
 			
+			displaytext += ichar;
+			
 			if (ichar == "{" && !isitem) {
 				isitem = true;
 			}
@@ -129,6 +131,7 @@ var ZotCustom = new function() {
 					var name = Zotero.ItemFields.getName(j);
 					var val = selectedItem.getField(j);
 					if (itemtext == name && val != "") {
+						displaytext = displaytext.substring(0, displaytext.length - itemtext.length-2);
 						displaytext += val;
 						break;
 					}
@@ -139,9 +142,6 @@ var ZotCustom = new function() {
 			else {
 				if (isitem) {
 					itemtext += ichar;
-				}
-				else {
-					displaytext += ichar;
 				}
 			}
 		}
