@@ -19,8 +19,10 @@ Zotero.ZotLink = {
         var rows = this.DB.query(sql);
         this.links = new _LinkGraph(rows);
 
+        // start listening to events
         this.observerID = Zotero.Notifier.registerObserver(this.observer, ["item"]);
 
+        // stop listening to events when unloaded
         window.addEventListener("unload", function() {
             Zotero.Notifier.unregisterObserver(this.observerID);
         });
@@ -31,9 +33,9 @@ Zotero.ZotLink = {
             // keep a reference to our ZotLink object
             var zotlink = Zotero.ZotLink;
 
-            var sql;
             if (event === "delete") {
-                sql = "DELETE FROM links WHERE item1id IN (" + ids + ") OR item2id IN (" + ids + ");";
+                // update db
+                var sql = "DELETE FROM links WHERE item1id IN (" + ids + ") OR item2id IN (" + ids + ");";
                 zotlink.DB.query(sql);
                 // also update the cache to reduce database access
                 for (var i = 0; i < ids.length; i++) {
@@ -55,6 +57,7 @@ Zotero.ZotLink = {
                         // temporarily stop listening to events
                         Zotero.Notifier.unregisterObserver(zotlink.observerID);
 
+                        // update the target
                         source.clone(false, target);
                         target.save();
 
@@ -66,15 +69,27 @@ Zotero.ZotLink = {
         },
     },
 
-    openDialog: function() {
+    promptCreateLink: function() {
+        // get selected items
         var selectedItems = ZoteroPane_Local.getSelectedItems();
-        window.openDialog("chrome://zotlink/content/makeLinkedCopy.xul",
+        // get destination library id and collection id
+        var io = {};
+        window.openDialog("chrome://zotlink/content/pickLinkDestination.xul",
                           "",
                           "chrome,centerscreen,modal,resizable=no",
-                          selectedItems);
+                          io);
+        var result = io.out;
+        // do nothing if user hit cancel
+        if (!result || !result.accepted) {
+            return;
+        }
+        // do the actual job
+        for (var i = 0; i < selectedItems.length; i++) {
+            this.createLinkedCopy(selectedItems[i], result.destLibraryID, result.destCollectionID);
+        }
     },
 
-    createLinkedCopy: function(source, targetLibraryID, targetCollectionID) {
+    createLinkedCopy: function(source, destLibraryID, destCollectionID) {
         // temporarily stop listening to events
         Zotero.Notifier.unregisterObserver(this.observerID);
 
@@ -83,18 +98,19 @@ Zotero.ZotLink = {
 
         newItem = new Zotero.Item(source.itemTypeID);
         // add the item to the target library
-        newItem.libraryID = targetLibraryID || null;
+        newItem.libraryID = destLibraryID || null;
         newItemID = newItem.save();
         newItem = Zotero.Items.get(newItemID);
         // copy over all the information
         source.clone(false, newItem);
         newItem.save();
         // add the item to the target collection
-        if (targetCollectionID) {
-            Zotero.Collections.get(targetCollectionID).addItem(newItemID);
+        if (destCollectionID) {
+            Zotero.Collections.get(destCollectionID).addItem(newItemID);
         }
 
         // 2. link them
+        // update db
         var sql = "INSERT INTO links VALUES (" + source.id + ", " + newItemID + ");";
         this.DB.query(sql);
         // also update the cache to reduce database access
@@ -103,22 +119,20 @@ Zotero.ZotLink = {
         // resume listening to events
         this.observerID = Zotero.Notifier.registerObserver(this.observer, ["item"]);
     },
-
-    createLinkedCopies: function(sources, targetLibraryID, targetCollectionID) {
-        for (var i = 0; i < sources.length; i++) {
-            this.createLinkedCopy(sources[i], targetLibraryID, targetCollectionID);
-        }
-    },
 };
 
 window.addEventListener("load", function() { Zotero.ZotLink.init(); });
 
 
+/* implementation of graph data structure where nodes are the items and
+ * edges are the links
+ */
 function _LinkGraph(pairs) {
     // build graph (as an adjacency list)
     this.graph = {};
     _buildGraph(pairs);
 
+    // connect linked pair in the graph
     this.addLink = function(pair) {
         var item1id = pair[0],
             item2id = pair[1];
@@ -191,6 +205,7 @@ function _LinkGraph(pairs) {
     };
 
     function _buildGraph(pairs) {
+        // connect all pairs that are linked and that is our graph
         for (var i = 0; i < pairs; i++) {
             this.addLink(pairs[i]);
         }
