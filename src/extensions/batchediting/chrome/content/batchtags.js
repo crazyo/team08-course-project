@@ -1,6 +1,5 @@
 var BatchTags = new function() {
     this.init = init;
-    //this.refreshed = 0;
 
 
     function init() {
@@ -17,7 +16,7 @@ var BatchTags = new function() {
             tagnames.push(tags[item].name);
         }
 
-        //document.getElementById("testing").setText(refreshed);
+        // document.getElementById("testing").setText(refreshed);
 
 
         // //remove childs
@@ -38,18 +37,39 @@ var BatchTags = new function() {
         var group = document.getElementById("tag-batch");
         var tags = this.getCheckedBoxes("tag-batch");
 
-        if (tags.length != 1){
-            document.getElementById("")
+        if (!tags.length){
+            return;
         } else{
+            if (document.getElementById("input-new-name").getAttribute("hidden") == "true"){
+                document.getElementById("input-new-name").setAttribute("hidden","false");
+            } else{
 
+                // Case of Renaming
+                var newLabel = "new";
+                var toModify = document.getElementById(tags[0].id);
+                toModify.label = newLabel;
+                toModify.id = newLabel;
+
+
+                // Case of Merging
+                if (tags.length > 1){
+                    for (i = 1; i < tags.length; i++){
+                        var toDelete = document.getElementById(tags[i].id);
+                        toDelete.parentNode.removeChild(toDelete);
+                    }
+                }
+
+                document.getElementById("input-new-name").setAttribute("hidden","true");
+            }
         }
+
     }
 
     this.deleteTags = function (){
         var group = document.getElementById("tag-batch");
         var tags = this.getCheckedBoxes("tag-batch");
 
-        if (tags.length != 0){
+        if (tags.length > 0){
             for(i = 0; i < tags.length; i++){
                 var toDelete = document.getElementById(tags[i].id);
                 toDelete.parentNode.removeChild(toDelete);

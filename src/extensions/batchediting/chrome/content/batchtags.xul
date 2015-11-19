@@ -22,7 +22,7 @@
 				<button id="delete-tag" label="Delete!" oncommand="BatchTags.deleteTags();" width="35" />
 			</vbox>
 			<vbox align="right">
-				<textbox id="input-newn-name" value="Enter New Name:" label="Enter New Name:"/>
+				<textbox id="input-new-name" label="Enter New Name:" hidden="true" />
 				<button id="rename-tag" label="Rename!" oncommand="BatchTags.renameTags();" width="35" />
 			</vbox>
 		</groupbox>
