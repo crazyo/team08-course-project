@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
-
-
 	<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
 			id="batch-edit-tags-dialog"
 			title="Edit Tags" buttons="cancel,accept"
@@ -12,7 +10,20 @@
 
 		<vbox>
 			<groupbox id="tag-batch">
-				<checkbox label="test"/>
 			</groupbox>
+
+			<a id="testing">
+				testing
+			</a>
 		</vbox>
+
+		<groupbox>
+			<vbox align="left">
+				<button id="delete-tag" label="Delete!" oncommand="BatchTags.deleteTags();" width="35" />
+			</vbox>
+			<vbox align="right">
+				<textbox id="input-newn-name" value="Enter New Name:" label="Enter New Name:"/>
+				<button id="rename-tag" label="Rename!" oncommand="BatchTags.renameTags();" width="35" />
+			</vbox>
+		</groupbox>
 	</dialog>
