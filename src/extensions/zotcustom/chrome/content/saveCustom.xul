@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+		id="zotcustomsave"
+		title="Save Format" buttons="cancel,extra1"
+		buttonlabelextra1="Save"
+		ondialogextra1="SaveCustom.save();">
+
+	<script src="chrome://zotero/content/include.js"/>
+	<script src="chrome://zotcustom/content/saveCustom.js"/>
+	
+	<vbox style="box-align: center; box-pack: center; width: 300px; height: 100px">
+		<description> Name the new format: </description>
+		<textbox id="save-citation-textbox" value="" />
+	</vbox>
+</dialog>

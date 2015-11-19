@@ -1,0 +1,15 @@
+Code inspection on BatchEditing
+Reviewer: Xufeng Wang
+Plug-in under review: BatchEditing
+Date: Nov. 10
+Author: Owen Wang
+
+Note: Since the functionality is not fully implemented yet, the code review was
+      done on the existing code that was quite messy
+Bug #1 - Incorrect dialog option from leftover testing code
+    Description: When fire up the batch-editing dialog, there is a fake tag
+                 named "test". It is very likely to be caused by testing code
+                 that was not deleted.
+Style issue #1 - No documentation
+Style issue #2 - Bad indentations and empty lines
+Style issue #3 - Unused variables and testing code was not deleted

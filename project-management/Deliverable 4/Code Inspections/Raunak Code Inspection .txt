@@ -1,0 +1,20 @@
+Reviewer: Raunak Mathur 
+Code: zotlink.js used for the zotlink plugin 
+Date of review: Tuesday November 10, 2015 
+Author: Xufeng Wang 
+
+• Bugs 
+    • No bugs found and data is saved as wanted 
+• Poor code logic 
+    • All code appears to be efficient and used in some way aside from a few function paramaters
+• Poor coding style 
+    • Proper coding style used. Was very clear to read. 
+• Missing documentation 
+    • Missing comments for many functions including buildgraph, addLink, LinkGraph, createLinkedCopies, createLinkedCopy 
+	• Good comments for other parts of code such as loops, control statements and variable declarations
+• Unreadable code: 
+    • Code was easy to read and well spaced. Also good use of variable names
+• Vulnerabilities in code 
+    • In notify function, type and extra arguments do not seem to be handled and used anywhere 
+• Poor testing 
+    • No testing was implemented
