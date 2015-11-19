@@ -40,11 +40,7 @@ var ZotCustom = new function() {
     this.saveCitation = function() {
         var styleList = opener.document.getElementById("style-listbox");
 		var output = document.getElementById("new-citation-display");
-		
-		window.openDialog("chrome://zotcustom/content/saveCustom.xul",
-                          "",
-                          "chrome,centerscreen,modal,resizable=no",
-						  styleList, output);
+		window.openDialog("chrome://zotcustom/content/saveCustom.xul","", "chrome,centerscreen,modal,resizable=no", styleList, output);
     }
 	
 	/*
