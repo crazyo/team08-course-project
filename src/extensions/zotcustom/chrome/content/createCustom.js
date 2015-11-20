@@ -4,13 +4,9 @@ var ZotCustom = new function() {
 	var listUpdated = false;	// Checks if drop down has already been updated
 	var selectedItem;			// For use in updateList and updateDisplay; accesses item fields
 
-	this.init = function() {
-		updateList();
-	};
-
 	//update the ddl based on items forms
     //can probably use getUsedFields from items.js
-	var updateList = function(){
+	this.updateList = function(){
 		// If the list has already been updated, don't do it again.
 		if (listUpdated) return;
 
@@ -26,9 +22,9 @@ var ZotCustom = new function() {
 			var val = selectedItem.getField(i);
 
 			// Insert
-			mylist.appendItem(name, name);
+			mylist.appendItem(name, name)
 
-            //not too sure bout this part..
+            //not too sure about this part..
 			if (name == 'version') {
 				// Changed in API v3 to avoid clash with 'version' above
 				// Remove this after https://github.com/zotero/zotero/issues/670
@@ -38,7 +34,7 @@ var ZotCustom = new function() {
 
 		// Set list to updated
 		if (selectedItem) listUpdated = true;
-	}
+	};
 
     //save the new citation and add it to the list of citation styles
     this.saveCitation = function() {
