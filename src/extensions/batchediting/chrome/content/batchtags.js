@@ -2,12 +2,14 @@ var BatchTags = new function() {
     this.init = init;
 
 
-    function init() {
+    // Queries to execute on accept.
+    this.query = [];
+
+
+    function init (){
         var group = document.getElementById("tag-batch");
         var tagnames = [];
         var tags = Zotero.Tags.getAll();
-        //refreshed = refresh + 1;
-
 
         for (var item in tags) {
             if (!tags.hasOwnProperty(item)) {
@@ -15,14 +17,6 @@ var BatchTags = new function() {
             }
             tagnames.push(tags[item].name);
         }
-
-        // document.getElementById("testing").setText(refreshed);
-
-
-        // //remove childs
-        // while(group.hasChildNodes()){
-        //     group.removeChild(group.firstChild);
-        // }
 
         for (var i = 0; i < tagnames.length; i++) {
             var tagbox = document.createElement("checkbox");
@@ -45,20 +39,23 @@ var BatchTags = new function() {
             } else{
 
                 // Case of Renaming
-                var newLabel = "new";
+                var newLabel = document.getElementById("input-new-name").value;
                 var toModify = document.getElementById(tags[0].id);
+
+                this.query.push("this.renameTag(\"" + tags[0].label + "\", \"" + newLabel + "\")");
                 toModify.label = newLabel;
                 toModify.id = newLabel;
-
 
                 // Case of Merging
                 if (tags.length > 1){
                     for (i = 1; i < tags.length; i++){
                         var toDelete = document.getElementById(tags[i].id);
+                        this.query.push("this.renameTag(\"" + tags[i].label + "\", \"" + newLabel + "\")");
                         toDelete.parentNode.removeChild(toDelete);
                     }
                 }
 
+                // Set the input box back to hidden.
                 document.getElementById("input-new-name").setAttribute("hidden","true");
             }
         }
@@ -72,11 +69,18 @@ var BatchTags = new function() {
         if (tags.length > 0){
             for(i = 0; i < tags.length; i++){
                 var toDelete = document.getElementById(tags[i].id);
+                this.query.push("this.deleteTag(\"" + tags[i].label + "\")");
                 toDelete.parentNode.removeChild(toDelete);
             }
         } else{
             return;
         }
+    }
+
+
+    this.acceptChanges = function(){
+        document.getElementById("testing").value = this.query;
+        return this.query;
     }
 
     this.getCheckedBoxes = function(chkboxName) {

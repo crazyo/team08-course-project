@@ -2,6 +2,18 @@
 <overlay id="batchediting-overlay"
 		 xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
+
+<!-- 	<menupopup id="view-settings-popup">
+	<menupopup id="zotero-itemmenu">
+		<menuitem id="batch-edit-selector" label="Batch Edit Tags" oncommand="Zotero.BatchEditing.openDialog();"/>
+	</menupopup> -->
+	<hbox id="zotero-items-toolbar">
+		<toolbarseperator>
+		</toolbarseperator>
+		<toolbarbutton class="zotero-tb-button" id="batchedit-button" oncommand="Zotero.BatchEditing.openDialog();"/>
+	</hbox>
+	
+
 	<!-- gain access to the Zotero object -->
 	<script src="chrome://zotero/content/include.js"/>
 	<!-- kick off our extension -->
