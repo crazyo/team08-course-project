@@ -6,4 +6,7 @@
      <vbox id="zotero-item-pane" onselect="if (!ZoteroPane_Local.collectionsView.selection || event.originalTarget.localName != 'tabpanels') { return; }; ZoteroItemPane.viewItem(ZoteroPane_Local.getSelectedItems()[0], ZoteroPane_Local.collectionsView.editable ? 'edit' : 'view', this.selectedIndex)">
      <button id="add_field" label="Add Field" oncommand="window.open('chrome://zotcustom_form/content/createField.xul', 'customizepg', 'chrome', 'centerscreen');"/>
      </vbox>
+
+     <script src="chrome://zotero/content/include.js"/>
+     <script src="chrome://zotlink/content/include.js"/>
 </overlay>
