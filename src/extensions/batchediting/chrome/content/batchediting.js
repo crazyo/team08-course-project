@@ -19,10 +19,6 @@ Zotero.BatchEditing = {
 
     openDialog: function(){
 
-        ss = Zotero.DB.query("SELECT * FROM items");
-
-        console.log(ss);
-
         window.openDialog("chrome://batchediting/content/batchtags.xul","","chrome,centerscreen,resizable=yes");
     },
 
@@ -34,7 +30,7 @@ Zotero.BatchEditing = {
 
     acceptChanges: function(listOfActions){
 
-        if (this.ps.confirm(null, "Confirm", "Confirmaaa to make changes?")){
+        if (this.ps.confirm(null, "Confirm", "Confirm to make changes?")){
             for (i=0;i < listOfActions.length; i++){
 
                 // Execute queries.
@@ -43,19 +39,27 @@ Zotero.BatchEditing = {
         };
     },
 
+
+    //Zotero.Tags endpoint
     renameTag: function(tagName, newTagName){
         console.log(tagName);
+        tagID = this.getTagIDFromName(tagName);
 
-        //Zotero.DB = 
-
+        Zotero.Tags.rename(tagID, newTagName);
     },
 
     deleteTag: function(tagName){
-        console.log(tagName);
+        tagID = this.getTagIDFromName(tagName);
+
+        //console.log(Zotero.Tags.get(tagID));
+        Zotero.Tags.erase(tagID);
+    },
 
 
-
-
+    getTagIDFromName: function(tagName){
+        var prepared = "SELECT tagID FROM tags WHERE name=?";
+        var param = [tagName];
+        return Zotero.DB.valueQuery(prepared, param);
     }
 };
 

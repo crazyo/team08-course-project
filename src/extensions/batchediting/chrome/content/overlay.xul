@@ -10,7 +10,15 @@
 	<hbox id="zotero-items-toolbar">
 		<toolbarseperator>
 		</toolbarseperator>
-		<toolbarbutton class="zotero-tb-button" id="batchedit-button" oncommand="Zotero.BatchEditing.openDialog();"/>
+		<toolbarbutton class="zotero-tb-button"
+			id="batchedit-button" 
+			tooltiptext="Batch Edit Tags"
+			oncommand="Zotero.BatchEditing.openDialog();">
+
+			<label value="B.T."/>
+<!-- 			<xul:image style="list-style-image: url('chrome://zotero/skin/mac/cog.png')">
+			</xul:image> -->
+		</toolbarbutton>
 	</hbox>
 	
 
