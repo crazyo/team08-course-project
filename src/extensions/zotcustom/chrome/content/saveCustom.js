@@ -47,14 +47,19 @@ var SaveCustom = new function() {
             '</title>\n\t\t<id>http://www.zotero.org/styles/' + saveName +
             '</id>\n\t\t<updated>2015-04-07T11:18:00+00:00</updated>\n\t</info>\n\t<bibliography et-al-min="6" ' +
             'et-al-use-first="1" second-field-align="flush" entry-spacing="0" line-spacing="2">\n\t' +
-            '<layout>\n\t\t<group delimiter=", " prefix="(" suffix=")">\n';
+            '<layout>';
         finalCSL = requiredFields;
         //go through format fields and create csl using output
         var i;
         for(i = 0; i < finalFormat.length-1; i++){
-            finalCSL += '\t\t\t<text variable="' + finalFormat[i] + '" suffix=","/>\n';
+            //check if theres a prefix
+            if(!finalFormat[i][0].match("^[a-zA-Z\(\)]+$")){
+                finalCSL += '\n\t\t<text variable="' + finalFormat[i].slice(1) + '" prefix="' + finalFormat[i][0] + '"/>';
+            }else{
+                finalCSL += '\n\t\t<text variable="' + finalFormat[i] + '"/>';
+            }
         }
-        finalCSL += '\t\t</group>\n\t</layout>\n\t</bibliography>\n</style>';
+        finalCSL += '\n\t</layout>\n\t</bibliography>\n</style>';
         return finalCSL;
     }
 }
