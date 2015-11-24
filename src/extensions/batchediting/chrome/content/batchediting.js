@@ -73,18 +73,18 @@ Zotero.BatchEditing = {
                 //Check if tag of given name exists.
                 if (tagID){
 
-                    var tag = Zotero.Tags.get(tagID);
-                    console.log(tag);
-
+                    // Database access point.
                     Zotero.DB.beginTransaction();
-                    for (var i=0; i<items.length; i++){
+                    tag = Zotero.Tags.get(tagID);
+                    //console.log(tag);
 
+                    for (i=0; i<items.length; i++){
                         tag.addItem(items[i].getID());
                         tag.save();
-                        console.log(Zotero.Items.get(items[i].getID()));
                     }
 
                     Zotero.DB.commitTransaction();
+                    
                 // tagName doesnt exist.
                 } else{
                     console.log("doesnt");
@@ -95,6 +95,8 @@ Zotero.BatchEditing = {
     },
 
     toggleAddTag: function(){
+
+        console.log("inaaa");
         if (ZoteroPane_Local.getSelectedItems().length != 0){
             document.getElementById("add-tags-menuitem").disabled = false;
         } else{
