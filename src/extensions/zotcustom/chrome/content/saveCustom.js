@@ -1,16 +1,18 @@
 Components.utils.import("resource://gre/modules/NetUtil.jsm");
 Components.utils.import("resource://gre/modules/FileUtils.jsm");
 
-//save custom citation to csl file locally
 var SaveCustom = new function() {
 
 	var format = opener.document.getElementById("new-citation-format");
+
+    //save custom citation to csl file locally
 	this.save = function() {
         var saveName = document.getElementById("save-citation-textbox");
         //using csledit from zotero source code for filepicker part
         //create file and save to folder user selects
         var fp = Components.classes["@mozilla.org/filepicker;1"].createInstance(Components.interfaces.nsIFilePicker);
         fp.init(window, "Save As", Components.interfaces.nsIFilePicker.modeSave);
+        //add csl extension
         fp.appendFilter("Citation Style Language", "*.csl");
         var ret = fp.show();
         if (ret == fp.returnOK || ret == fp.returnReplace) {
@@ -41,10 +43,10 @@ var SaveCustom = new function() {
             '</id>\n\t\t<updated>2015-04-07T11:18:00+00:00</updated>\n\t</info>\n\t<bibliography et-al-min="6" ' +
             'et-al-use-first="1" second-field-align="flush" entry-spacing="0" line-spacing="2">\n\t' +
             '<layout>';
-        //go through format fields and create csl using output
+        //go through format fields and create csl using users output
         var i;
         for(i = 0; i < finalFormat.length-1; i++){
-            //check if theres a prefix
+            //check if there is a prefix
             if(!finalFormat[i][0].match("^[a-zA-Z\(\)]+$")){
                 finalCSL += '\n\t\t<text variable="' + finalFormat[i].slice(1) + '" prefix="' + finalFormat[i][0] + '"/>';
             }else{

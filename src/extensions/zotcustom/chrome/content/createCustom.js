@@ -19,7 +19,6 @@ var ZotCustom = new function() {
 		var i;
 		for (i in selectedItem._itemData) {
             var name = Zotero.ItemFields.getName(i);
-			var val = selectedItem.getField(i);
 
 			// Insert
 			mylist.appendItem(name, name)
@@ -35,11 +34,6 @@ var ZotCustom = new function() {
 		// Set list to updated
 		if (selectedItem) listUpdated = true;
 	};
-
-    //save the new citation and add it to the list of citation styles
-    this.saveCitation = function() {
-		window.openDialog("chrome://zotcustom/content/saveCustom.xul","", "chrome,centerscreen,modal,resizable=no");
-    }
 
 	/*
 	 * Returns the caret (cursor) position of the specified text field.
