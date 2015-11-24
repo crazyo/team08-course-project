@@ -7,7 +7,6 @@
 
 	<script src="chrome://zotero/content/include.js"/>
 	<script src="chrome://zotcustom/content/createCustom.js"/>
-	<script src="chrome://zotcustom/content/saveCustom.js"/>
 
 	<vbox style="box-align: center; box-pack: center; width: 400px; height: 200px">
 		<groupbox>
@@ -34,4 +33,5 @@
 			</vbox>
 		</groupbox>
 	</vbox>
+    <script src="chrome://zotcustom/content/saveCustom.js"/>
 </dialog>
