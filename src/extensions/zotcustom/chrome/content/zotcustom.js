@@ -20,8 +20,8 @@ var Zotero_File_Interface_Bibliography = new function() {
 	  */
 	 var index;
 	 var boxes = document.getElementsByTagName( "groupbox" );
-	 for (index = 0; index < 4; ++index) {
-		boxes[0].remove();
+	 for (index = boxes.length-1; index >= 0; --index) {
+		boxes[index].remove();
 	 }
 	 
 	this.init = function () {

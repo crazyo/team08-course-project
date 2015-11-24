@@ -4,7 +4,7 @@
 
 	<Description about="urn:mozilla:install-manifest">
 		<em:id>zotero@team08</em:id>
-		<em:name>Custom_form</em:name>
+		<em:name>Custom Fields</em:name>
 		<em:version>1.0</em:version>
 		<em:creator>Wei Cong Su</em:creator>
 		<em:type>2</em:type>
