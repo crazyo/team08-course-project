@@ -84,8 +84,11 @@ Zotero.BatchEditing = {
                     }
 
                     Zotero.DB.commitTransaction();
-                    
-                // tagName doesnt exist.
+
+
+
+                // tagName doesnt exist. 
+                // TODO: impletement this feature.
                 } else{
                     console.log("doesnt");
                 }

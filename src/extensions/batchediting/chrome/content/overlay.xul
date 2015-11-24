@@ -21,7 +21,7 @@
 				<menuitem label="Rename Tags" oncommand="Zotero.BatchEditing.openDialog();"/>
 				<menuitem label="Merge Tags" oncommand="Zotero.BatchEditing.openDialog();"/>
 				<menuitem label="Delete Tags" oncommand="Zotero.BatchEditing.openDialog();"/>
-				<menuseperator/>
+				<menuseperator></menuseperator>
 				<menuitem id="add-tags-menuitem" label="Add Tag To Selected Items" oncommand="Zotero.BatchEditing.openAddTagDialog();"/>
 			</menupopup>
 		</toolbarbutton>
