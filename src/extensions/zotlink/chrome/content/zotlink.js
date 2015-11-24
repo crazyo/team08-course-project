@@ -6,6 +6,10 @@ Zotero.ZotLink = {
     // current observerID
     observerID: null,
 
+    // services
+    ps: Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
+                  .getService(Components.interfaces.nsIPromptService),
+
 
     init: function() {
         // connect to the database (create if necessary)
@@ -115,6 +119,93 @@ Zotero.ZotLink = {
         this.DB.query(sql);
         // also update the cache to reduce database access
         this.links.addLink([source.id, newItemID]);
+
+        // resume listening to events
+        this.observerID = Zotero.Notifier.registerObserver(this.observer, ["item"]);
+    },
+
+    promptLinkExisting: function() {
+        // get selected items
+        var selectedItems = ZoteroPane_Local.getSelectedItems();
+        // only allow single selection
+        if (selectedItems.length > 1) {
+            this.ps.alert(null,
+                          "Multiple Selections Not Allowed",
+                          "Only one source item is allowed at a time!");
+            return;
+        }
+        // source item to link to
+        var source = selectedItems[0];
+
+        // select target items
+        var io = {};
+        window.openDialog("chrome://zotero/content/selectItemsDialog.xul", "", "chrome,modal", io);
+        var targets = io.dataOut;
+        // do nothing if user hit cancel or didn't select any item
+        if (!targets || !targets.length) {
+            return;
+        }
+
+        // confirm
+        var confirmed = this.ps.confirm(null,
+                                        "Are You Sure You Want to Continue?",
+                                        "The selected target items will be OVERWRITTEN by the source item.\n" +
+                                        "Make sure you already have important information backed-up!");
+        if (!confirmed) {
+            return;
+        }
+
+        // do the actual job
+        for (var i = 0; i < targets.length; i++) {
+            this.linkExistingItem(source, Zotero.Items.get(targets[i]));
+        }
+    },
+
+    linkExistingItem: function(source, target) {
+        // 1. check if linking is allowed
+        // i> target and source cannot be the same item
+        if (source.id === target.id) {
+            this.ps.alert(null,
+                          "Cannot Link Item to Itself",
+                          "Source item and target item cannot be the same item!\n" +
+                          "source: " + source.id + "; target: " + target.id);
+            return;
+        }
+        // ii> target and source cannot already be linked
+        var existingLinks = this.links.findLinks(source.id);
+        if (existingLinks && existingLinks.length) {
+            for (var i = 0; i < existingLinks.length; i++) {
+                if (existingLinks[i] === target.id) {
+                    this.ps.alert(null,
+                                  "Cannot Link Already Linked Items",
+                                  "Source item and target item are already linked!\n" +
+                                  "source: " + source.id + "; target: " + target.id);
+                    return;
+                }
+            }
+        }
+        // iii> target and source must be of the same item type
+        if (target.itemTypeID !== source.itemTypeID) {
+            this.ps.alert(null,
+                          "Cannot Link Different Types of Items",
+                          "Source item and target item must be of the same type!\n" +
+                          "source: " + source.id + "; target: " + target.id);
+            return;
+        }
+
+        // temporarily stop listening to events
+        Zotero.Notifier.unregisterObserver(this.observerID);
+
+        // 2. update target information
+        source.clone(false, target);
+        target.save();
+
+        // 3. link them
+        // update db
+        var sql = "INSERT INTO links VALUES (" + source.id + ", " + target.id + ");";
+        this.DB.query(sql);
+        // also update the cache to reduce database access
+        this.links.addLink([source.id, target.id]);
 
         // resume listening to events
         this.observerID = Zotero.Notifier.registerObserver(this.observer, ["item"]);
