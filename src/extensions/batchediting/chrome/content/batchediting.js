@@ -17,19 +17,26 @@ Zotero.BatchEditing = {
         });
     },
 
-    openDialog: function(){
+    openAddTagDialog: function(){
+        var selectedItems = ZoteroPane_Local.getSelectedItems();
+        window.openDialog("chrome://batchediting/content/addtags.xul",
+            "",
+            "chrome,centerscreen,resizable=yes",
+            selectedItems);
+    },
 
-        window.openDialog("chrome://batchediting/content/batchtags.xul","","chrome,centerscreen,resizable=yes");
+    openDialog: function(){
+        window.openDialog("chrome://batchediting/content/batchtags.xul",
+            "",
+            "chrome,centerscreen,resizable=yes");
     },
 
     test: function(){
-        //window.alert("test");
         var ret = this.ps.confirm(null, "Confirm", "Confirmtest to make changes?");
         window.alert(ret);
     },
 
     acceptChanges: function(listOfActions){
-
         if (this.ps.confirm(null, "Confirm", "Confirm to make changes?")){
             for (i=0;i < listOfActions.length; i++){
 
@@ -42,19 +49,57 @@ Zotero.BatchEditing = {
 
     //Zotero.Tags endpoint
     renameTag: function(tagName, newTagName){
-        console.log(tagName);
-        tagID = this.getTagIDFromName(tagName);
-
+        var tagID = this.getTagIDFromName(tagName);
         Zotero.Tags.rename(tagID, newTagName);
     },
 
     deleteTag: function(tagName){
-        tagID = this.getTagIDFromName(tagName);
-
-        //console.log(Zotero.Tags.get(tagID));
+        var tagID = this.getTagIDFromName(tagName);
         Zotero.Tags.erase(tagID);
     },
 
+    addTags: function(tagName){
+        if (this.ps.confirm(null, "Confirm", "Confirm to add tag?")){
+            var items = ZoteroPane_Local.getSelectedItems();
+
+            console.log(items);
+
+            if(!tagName){
+                this.ps.alert(null, "warning", "Tag Name can't be empty. No change will be made.")
+            } else{
+
+                var tagID = this.getTagIDFromName(tagName);
+
+                //Check if tag of given name exists.
+                if (tagID){
+
+                    tag = Zotero.Tags.get(tagID);
+                    console.log(tag);
+
+                    Zotero.DB.beginTransaction();
+                    for (i=0; i<items.length; i++){
+
+                        tag.addItem(items[i].getID());
+                        console.log(Zotero.Items.get(items[i].getID()));
+                    }
+
+                    Zotero.DB.commitTransaction();
+                // tagName doesnt exist.
+                } else{
+                    console.log("doesnt");
+                }
+            }
+        }
+
+    },
+
+    toggleAddTag: function(){
+        if (ZoteroPane_Local.getSelectedItems().length != 0){
+            document.getElementById("add-tags-menuitem").disabled = false;
+        } else{
+            document.getElementById("add-tags-menuitem").disabled = true;
+        }
+    },
 
     getTagIDFromName: function(tagName){
         var prepared = "SELECT tagID FROM tags WHERE name=?";
@@ -63,4 +108,4 @@ Zotero.BatchEditing = {
     }
 };
 
-window.addEventListener("load", function() { Zotero.BatchEditing.init(); });
+window.addEventListener("load", function() {Zotero.BatchEditing.init();});

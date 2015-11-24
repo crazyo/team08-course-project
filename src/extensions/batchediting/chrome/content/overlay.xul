@@ -13,11 +13,17 @@
 		<toolbarbutton class="zotero-tb-button"
 			id="batchedit-button" 
 			tooltiptext="Batch Edit Tags"
-			oncommand="Zotero.BatchEditing.openDialog();">
+			style="list-style-image: url('chrome://zotero/skin/mac/cog.png')"
+			onclick="Zotero.BatchEditing.toggleAddTag();"
+			type="menu">
 
-			<label value="B.T."/>
-<!-- 			<xul:image style="list-style-image: url('chrome://zotero/skin/mac/cog.png')">
-			</xul:image> -->
+			<menupopup id="batch-edit-menu">
+				<menuitem label="Rename Tags" oncommand="Zotero.BatchEditing.openDialog();"/>
+				<menuitem label="Merge Tags" oncommand="Zotero.BatchEditing.openDialog();"/>
+				<menuitem label="Delete Tags" oncommand="Zotero.BatchEditing.openDialog();"/>
+				<menuseperator/>
+				<menuitem id="add-tags-menuitem" label="Add Tag To Selected Items" oncommand="Zotero.BatchEditing.openAddTagDialog();"/>
+			</menupopup>
 		</toolbarbutton>
 	</hbox>
 	

@@ -4,8 +4,6 @@
 			id="batch-edit-tags-dialog"
 			title="Edit Tags" 
 			buttons="cancel,accept"
-			width="400"
-			height="300"
 			onload="BatchTags.init();"
 			ondialogaccept="Zotero.BatchEditing.acceptChanges(BatchTags.acceptChanges());">
 
@@ -16,20 +14,20 @@
 			<groupbox id="tag-batch">
 			</groupbox>
 
-			<textbox id="testing" multiline="true">
-			</textbox>
+			<!-- <textbox id="testing" multiline="true"></textbox> --><!-- 
 			<button id="sss-tag" label="testAcce!" oncommand="Zotero.BatchEditing.acceptChanges(BatchTags.acceptChanges());" width="35" />
-			<button id="sss-tag2" label="test2!" oncommand="Zotero.BatchEditing.test();" width="35" />
+			<button id="sss-tag2" label="test2!" oncommand="Zotero.BatchEditing.test();" width="35"/> -->
 		</vbox>
-
-		<groupbox>
-			<vbox align="left">
+			<row>
 				<button id="delete-tag" label="Delete!" oncommand="BatchTags.deleteTags();" width="35" />
-			</vbox>
-			<vbox align="right">
-				<textbox id="input-new-name" label="Enter New Name:" hidden="true" />
-				<button id="rename-tag" label="Rename!" oncommand="BatchTags.renameTags();" width="35" />
-
-			</vbox>
-		</groupbox>
+				<button id="rename-tag" label="Rename!" oncommand="BatchTags.toggleRenameFields();" width="35" />
+			</row>
+			<groupbox id="for-new-name" hidden="true">
+				<label for="input-new-name" id="input-name-label" value="Enter New Name:"/>
+				<textbox id="input-new-name" oninput="BatchTags.enableSave();"/>
+				<row align="right">
+					<button id="cancel-new-name" label="Cancel" oncommand="BatchTags.cancelRename();"/>
+					<button id="save-new-name" label="Save" disabled="true" oncommand="BatchTags.renameTags();"/>
+				</row>
+			</groupbox>
 	</dialog>
