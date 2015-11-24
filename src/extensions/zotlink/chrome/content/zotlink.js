@@ -219,9 +219,8 @@ window.addEventListener("load", function() { Zotero.ZotLink.init(); });
  * edges are the links
  */
 function _LinkGraph(pairs) {
-    // build graph (as an adjacency list)
+    // the graph inner representation of the linked items (will build later)
     this.graph = {};
-    _buildGraph(pairs);
 
     // connect linked pair in the graph
     this.addLink = function(pair) {
@@ -295,10 +294,12 @@ function _LinkGraph(pairs) {
         }
     };
 
-    function _buildGraph(pairs) {
+    // build graph (as an adjacency list)
+    this._buildGraph = function(pairs) {
         // connect all pairs that are linked and that is our graph
-        for (var i = 0; i < pairs; i++) {
-            this.addLink(pairs[i]);
+        for (var i = 0; i < pairs.length; i++) {
+            this.addLink([pairs[i].item1id, pairs[i].item2id]);
         }
-    }
+    };
+    this._buildGraph(pairs);
 }
