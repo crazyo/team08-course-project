@@ -6,7 +6,7 @@ Zotero.BatchEditing = {
         // var ZoteroPane = Components.classes["@mozilla.org/appshell/window-mediator;1"].getService(Components.interfaces.nsIWindowMediator).getMostRecentWindow("navigator:browser").ZoteroPane;
         // var tagmenu = document.getElementById("view-settings-popup");
         // var batchedit = document.createElement("menuitem");
-    
+
         // batchedit.setAttribute("label", "Batch Edit Tags");
         // batchedit.setAttribute("oncommand", "Zotero.BatchEditing.openDialog();");
         // tagmenu.appendChild(batchedit);
@@ -73,13 +73,14 @@ Zotero.BatchEditing = {
                 //Check if tag of given name exists.
                 if (tagID){
 
-                    tag = Zotero.Tags.get(tagID);
+                    var tag = Zotero.Tags.get(tagID);
                     console.log(tag);
 
                     Zotero.DB.beginTransaction();
-                    for (i=0; i<items.length; i++){
+                    for (var i=0; i<items.length; i++){
 
                         tag.addItem(items[i].getID());
+                        tag.save();
                         console.log(Zotero.Items.get(items[i].getID()));
                     }
 
