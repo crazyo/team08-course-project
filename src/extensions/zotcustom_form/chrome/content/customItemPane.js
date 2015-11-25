@@ -241,10 +241,12 @@ var ZoteroItemPane = new function() {
 	
 	// Extension addition: Open dialog for custom field creation
 	this.openDialog = function () {
-		window.openDialog("chrome://zotcustom_form/content/createField.xul",
+		var selectedItems = ZoteroPane_Local.getSelectedItems();
+        selectedItems.push(document.getElementById("zotero-editpane-item-box"));
+        window.openDialog("chrome://zotcustom_form/content/createField.xul",
                           "",
-                          "chrome,centerscreen,modal,resizable=no");
-	};
-}   
-
+                          "chrome,centerscreen,modal,resizable=no",
+                          selectedItems);
+    };
+}
 addEventListener("load", function(e) { ZoteroItemPane.onLoad(e); }, false);
