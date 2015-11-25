@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+		id="zotcustom_field"
+		title="Custom Field" buttons="cancel,accept"
+		ondialogaccept = "createField.add();">
+
+	<script src="chrome://zotero/content/include.js"/>
+	<script src="chrome://zotcustom_form/content/createField.js"/>
+	
+	<vbox style="box-align: center; box-pack: center; width: 300px; height: 100px">
+		<groupbox>
+			<caption label="Please enter new field"/>
+			<textbox id="newcitation" value=""/>
+		</groupbox>
+	</vbox>
+</dialog>

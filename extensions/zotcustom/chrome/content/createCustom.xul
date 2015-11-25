@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+		id="zotcustom"
+		title="Custom Citation" buttons="cancel,accept">
+
+	<script src="chrome://zotero/content/include.js"/>
+	<script src="chrome://zotcustom/content/createCustom.js"/>
+
+	<vbox style="box-align: center; box-pack: center; width: 400px; height: 200px">
+		<groupbox>
+			<caption label="Available Fields:"/>
+			<menulist id="fields-drop-down" onfocus="ZotCustom.updateList();">
+				<menupopup id="fields-menu-popup" oncommand="ZotCustom.inputSelection();">
+				</menupopup>
+			</menulist>
+		</groupbox>
+		<description>  </description>
+
+		<groupbox>
+			<caption label="Custom Format:"/>
+			<textbox id="new-citation-format" value="" multiline = "true" onblur="ZotCustom.saveCaret();" onfocus="ZotCustom.setCaret();" oninput="ZotCustom.updateDisplay();"/>
+			<description> Use the drop-down menu to place item fields. Type your own punctuation marks and other characters in the text box above. </description>
+		</groupbox>
+		<description>  </description>
+
+		<groupbox>
+			<caption label="Here's what your format currently looks like:"/>
+			<textbox id="new-citation-display" value="" multiline = "true" readonly = "true"/>
+			<vbox align="right">
+				<button id="save-custom" label="Save As" width="60" oncommand="SaveCustom.save();"/>
+			</vbox>
+		</groupbox>
+	</vbox>
+    <script src="chrome://zotcustom/content/saveCustom.js"/>
+</dialog>
