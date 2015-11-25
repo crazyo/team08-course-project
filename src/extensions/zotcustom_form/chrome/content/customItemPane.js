@@ -16,7 +16,7 @@ var ZoteroItemPane = new function() {
 			return;
 		}
 		
-		
+		// Extension addition:
 		// Delete original tabpanels and items in item menu, in order to allow the
 		// insertion of custom elements inside existing tabpanels (which had no IDs).
 		var element = document.getElementById("zotero-view-item");
@@ -43,6 +43,7 @@ var ZoteroItemPane = new function() {
 		_relatedBox = document.getElementById('zotero-editpane-related');
 	}
 	
+	// Extension addition: Creates tab items with extra add button inserted
 	function createTabpanel(panelList)
 	{	
 		var tabPanels = document.getElementById("zotero-view-item");
@@ -77,31 +78,6 @@ var ZoteroItemPane = new function() {
 		for (i = 0; i < panelList.length; ++i) {
 			tabPanels.appendChild(panelList[i]);
 		}
-		
-		// Recreate Notes tag items
-		/*tabPanel = document.createElement("tabpanel");
-		vbox = document.createElement("vbox");
-		var hbox = document.createElement("hbox");
-		var label = document.createElement("label");
-		button = document.createElement("button");
-		//var grid = document.createElement("grid");
-		//var columns = document.createElement("columns");
-		
-		tabPanel.setAttribute("flex", 1);
-		tabPanel.setAttribute("orient", "vertical");
-		vbox.setAttribute("flex", 1);
-		vbox.setAttribute("class", "zotero-box");
-		hbox.setAttribute("align", "center");
-		label.setAttribute("id", "zotero-editpane-notes-label");
-		button.setAttribute("id", "zotero-editpane-notes-add");
-		button.setAttribute("label", "&zotero.item.add;");
-		button.setAttribute("oncommand", "ZoteroItemPane.addNote(event.shiftKey);");
-		
-		hbox.appendChild(label);
-		hbox.appendChild(button);
-		vbox.appendChild(hbox);
-		tabPanel.appendChild(vbox);
-		tabPanels.appendChild(vbox);*/
 	}
 	
 	
