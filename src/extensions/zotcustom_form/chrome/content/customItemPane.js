@@ -1,48 +1,34 @@
 /*
-    ***** BEGIN LICENSE BLOCK *****
-    
-    Copyright © 2009 Center for History and New Media
-                     George Mason University, Fairfax, Virginia, USA
-                     http://zotero.org
-    
-    This file is part of Zotero.
-    
-    Zotero is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-    
-    Zotero is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-    
-    You should have received a copy of the GNU Affero General Public License
-    along with Zotero.  If not, see <http://www.gnu.org/licenses/>.
-    
-    ***** END LICENSE BLOCK *****
+	Item Pane file with Custom Fields extension modifications.
 */
+
+// Console Tool; Remove after done:
+Components.utils.import("resource://gre/modules/devtools/Console.jsm");
 
 var ZoteroItemPane = new function() {
 	this.onLoad = onLoad;
 	
 	var _lastItem, _itemBox, _notesLabel, _notesButton, _notesList, _tagsBox, _relatedBox;
 	
-	/*
-	*	Delete original tabpanels and items in item menu, in order to
-	*	allow the insertion of custom elements inside existing tabpanels (which had no IDs).
-	*/
-	var index;
-	var boxes = document.getElementsByTagName( "groupbox" );
-	for (index = boxes.length-1; index >= 0; --index) {
-		boxes[index].remove();
-	}
-	
 	function onLoad()
 	{
 		if (!Zotero || !Zotero.initialized) {
 			return;
 		}
+		
+		// Extension addition:
+		// Delete original tabpanels and items in item menu, in order to allow the
+		// insertion of custom elements inside existing tabpanels (which had no IDs).
+		var element = document.getElementById("zotero-view-item");
+		var panelList = [];
+		while(element.hasChildNodes()) {
+			panelList.push(element.firstChild);
+			element.removeChild(element.firstChild);
+		}
+		
+		// Re-insert deleted items, except with the add button in the Items panel
+		panelList.shift();
+		createTabpanel(panelList);
 		
 		// Not in item pane, so skip the introductions
 		if (!document.getElementById('zotero-view-tabbox')) {
@@ -55,6 +41,43 @@ var ZoteroItemPane = new function() {
 		_notesList = document.getElementById('zotero-editpane-dynamic-notes');
 		_tagsBox = document.getElementById('zotero-editpane-tags');
 		_relatedBox = document.getElementById('zotero-editpane-related');
+	}
+	
+	// Extension addition: Creates tab items with extra add button inserted
+	function createTabpanel(panelList)
+	{	
+		var tabPanels = document.getElementById("zotero-view-item");
+		
+		// Recreate Info tab items
+		var tabPanel = document.createElement("tabpanel");
+		var vbox = document.createElement("vbox");
+		var hbox = document.createElement("hbox");
+		var label = document.createElement("label");
+		var button = document.createElement("button");
+		var itemBox = document.createElement("zoteroitembox");
+		
+		vbox.setAttribute("flex", 1);
+		vbox.setAttribute("class", "zotero-box");
+		hbox.setAttribute("align", "center");
+		label.setAttribute("value", "Fields:");
+		button.setAttribute("id", "add_field");
+		button.setAttribute("label", "Add");
+		button.setAttribute("oncommand", "ZoteroItemPane.openDialog();");
+		itemBox.setAttribute("id", "zotero-editpane-item-box");
+		itemBox.setAttribute("flex", 1);
+		
+		hbox.appendChild(label);
+		hbox.appendChild(button);
+		vbox.appendChild(hbox);
+		vbox.appendChild(itemBox);
+		tabPanel.appendChild(vbox);
+		tabPanels.appendChild(tabPanel);
+		
+		// Recreate other tab items
+		var i;
+		for (i = 0; i < panelList.length; ++i) {
+			tabPanels.appendChild(panelList[i]);
+		}
 	}
 	
 	
@@ -191,6 +214,15 @@ var ZoteroItemPane = new function() {
 		
 		_notesLabel.value = Zotero.getString(str, [c]);
 	}
-}   
-
+	
+	// Extension addition: Open dialog for custom field creation
+	this.openDialog = function () {
+		var selectedItems = ZoteroPane_Local.getSelectedItems();
+        selectedItems.push(document.getElementById("zotero-editpane-item-box"));
+        window.openDialog("chrome://zotcustom_form/content/createField.xul",
+                          "",
+                          "chrome,centerscreen,modal,resizable=no",
+                          selectedItems);
+    };
+}
 addEventListener("load", function(e) { ZoteroItemPane.onLoad(e); }, false);

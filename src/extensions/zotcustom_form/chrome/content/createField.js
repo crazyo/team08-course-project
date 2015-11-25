@@ -6,16 +6,16 @@
 Components.utils.import("resource://gre/modules/devtools/Console.jsm");
 
 var createField = new function() {
-	
 	this.add = function () {
-		console.log("derp");
-		var tree = document.getElementById("tree");
-		var io = {singleSelection:true};
-		window.openDialog('chrome://zotero/content/selectItemsDialog.xul', '', 'chrome,modal', io);
-		var selectedItemID = io.dataOut[0];
-		var selectedItem = Zotero.Items.get(selectedItemID);
-		var newfield = document.getElementById(new_field);
-		selectedItem.setField(newfield,"");
+		var selectedItem = window.arguments[0];
+        var textbox = document.getElementById('new_field');
+        var nextFieldID = Zotero.DB.getNextID("fieldsCombined","fieldID");
+        var sql = "INSERT INTO fieldsCombined VALUES (" + nextFieldID + "," + "'" + textbox.value + "',NULL, NULL,1);";
+        Zotero.DB.query(sql);
+        selectedItem[0]._itemData[nextFieldID] = "";
+        selectedItem[1].childElementCount++;
+        console.log(Zotero.DB.query("SELECT * FROM fieldsCombined;"));
+        console.log(textbox.value);
+        console.log(selectedItem);
 	};
-	
 }

@@ -6,7 +6,8 @@ https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/
 - Deliverable 2 Report: https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/d2.html
     (there is also a copy of everything in the repo under /project-management in case anything is broken on the website)
 - Deliverable 3 Report: https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/d3.html
-- **-> Deliverable 4 Report: https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/d4.html <-**
+- Deliverable 4 Report: https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/d4.html
+- **-> Deliverable 5 Report: https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/d5.html <-**
 
 # Build Instructions:
 1. ***Make a copy of config.sh.seed and name the copy config.sh before following the instructions.***

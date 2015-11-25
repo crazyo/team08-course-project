@@ -9,10 +9,10 @@
 	<script src="chrome://zotero/content/include.js"/>
 	<script src="chrome://zotcustom_form/content/createField.js"/>
 	
-	<vbox style="box-align: center; box-pack: center; width: 300px; height: 100px">
+	<vbox style="box-align: center; box-pack: center; width: 300px; height: 50px">
 		<groupbox>
-			<caption label="Please enter new field"/>
-			<textbox id="newcitation" value=""/>
+			<caption label="Please enter a new field:"/>
+			<textbox id="new_field" value=""/>
 		</groupbox>
 	</vbox>
 </dialog>
