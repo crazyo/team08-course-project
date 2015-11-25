@@ -1,4 +1,4 @@
-Batch Editing - Complete
-Linking Items - Complete
+Batch Editing - Complete. Can batch edit tags and save them.
+Linking Items - Complete. Can link items and change linked items data through changing original items data.
 Custom Citations - Can create, save and install csl file with easy to use UI. Still need to implement upload feature.
-Custom Forms - Trouble with displaying newly added form. Other then that everything works.
+Custom Forms - Trouble with displaying newly added form. Other then that everything works. Buttons for adding removing fields and also naming new field.

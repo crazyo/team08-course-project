@@ -1,13 +1,17 @@
-1. Add button for creating new citation
+1. Add button for creating new citation onto create bibliography window
 	- When user clicks this button they will be taken to new window for creating citation
 
 2. Display all fields for selected item
 	- Items field names are shown in a drop down list
 
 3. Create citation based on fields selected
-	-Can select fields and show values
+	- Can select fields and show values along with field names
 	- Can place seperators to customize output
 
 4. Save new citation
 	- Can save citation locally as a csl file
-	- Can now install new csl
+	- Can now install new csl and use same way as every other citation style
+
+5. Upload new citation
+	- Still need to implement uploading csl file online, although user can easily share their citation 
+	  same way they would save any other file since they now have the csl.
