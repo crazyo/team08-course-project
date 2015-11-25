@@ -219,6 +219,7 @@ var ZoteroItemPane = new function() {
 	this.openDialog = function () {
 		var selectedItems = ZoteroPane_Local.getSelectedItems();
         selectedItems.push(document.getElementById("zotero-editpane-item-box"));
+        selectedItems.push(this);
         window.openDialog("chrome://zotcustom_form/content/createField.xul",
                           "",
                           "chrome,centerscreen,modal,resizable=no",
