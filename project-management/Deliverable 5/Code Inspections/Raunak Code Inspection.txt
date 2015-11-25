@@ -20,4 +20,4 @@ Author: Elliot Cho and Wei Cong Su
     • Code was easy to read and well spaced. Not very good use of variable names.
 	
 • Poor testing 
-    • No testing was implemented
+    • No testing was implemented other then acceptance testing

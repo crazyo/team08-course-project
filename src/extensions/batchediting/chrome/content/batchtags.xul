@@ -13,10 +13,6 @@
 		<vbox>
 			<groupbox id="tag-batch">
 			</groupbox>
-
-			<!-- <textbox id="testing" multiline="true"></textbox> --><!-- 
-			<button id="sss-tag" label="testAcce!" oncommand="Zotero.BatchEditing.acceptChanges(BatchTags.acceptChanges());" width="35" />
-			<button id="sss-tag2" label="test2!" oncommand="Zotero.BatchEditing.test();" width="35"/> -->
 		</vbox>
 			<row>
 				<button id="delete-tag" label="Delete!" oncommand="BatchTags.deleteTags();" width="35" />
