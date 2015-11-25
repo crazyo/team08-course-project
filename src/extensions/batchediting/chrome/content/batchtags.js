@@ -16,14 +16,12 @@ var BatchTags = new function() {
             }
             tagnames.push(tags[item].name);
         }
-
         for (var i = 0; i < tagnames.length; i++) {
             var tagbox = document.createElement("checkbox");
             tagbox.setAttribute("id", tagnames[i]);
             tagbox.setAttribute("label", tagnames[i]);
             group.appendChild(tagbox);
         }
-
     }
 
     function initAdd(){
