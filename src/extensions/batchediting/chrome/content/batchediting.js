@@ -3,13 +3,6 @@ Zotero.BatchEditing = {
                                 .getService(Components.interfaces.nsIPromptService),
 
     init: function() {
-        // var ZoteroPane = Components.classes["@mozilla.org/appshell/window-mediator;1"].getService(Components.interfaces.nsIWindowMediator).getMostRecentWindow("navigator:browser").ZoteroPane;
-        // var tagmenu = document.getElementById("view-settings-popup");
-        // var batchedit = document.createElement("menuitem");
-
-        // batchedit.setAttribute("label", "Batch Edit Tags");
-        // batchedit.setAttribute("oncommand", "Zotero.BatchEditing.openDialog();");
-        // tagmenu.appendChild(batchedit);
         var observerID = Zotero.Notifier.registerObserver(this.observer, ["item"]);
 
         window.addEventListener("unload", function() {
@@ -17,6 +10,7 @@ Zotero.BatchEditing = {
         });
     },
 
+    // Open 'Add Tag To Selected Items' Dialog
     openAddTagDialog: function(){
         var selectedItems = ZoteroPane_Local.getSelectedItems();
         window.openDialog("chrome://batchediting/content/addtags.xul",
