@@ -6,6 +6,10 @@ Zotero.ZotLink = {
     // current observerID
     observerID: null,
 
+    // services
+    ps: Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
+                  .getService(Components.interfaces.nsIPromptService),
+
 
     init: function() {
         // connect to the database (create if necessary)
@@ -19,8 +23,10 @@ Zotero.ZotLink = {
         var rows = this.DB.query(sql);
         this.links = new _LinkGraph(rows);
 
+        // start listening to events
         this.observerID = Zotero.Notifier.registerObserver(this.observer, ["item"]);
 
+        // stop listening to events when unloaded
         window.addEventListener("unload", function() {
             Zotero.Notifier.unregisterObserver(this.observerID);
         });
@@ -31,9 +37,9 @@ Zotero.ZotLink = {
             // keep a reference to our ZotLink object
             var zotlink = Zotero.ZotLink;
 
-            var sql;
             if (event === "delete") {
-                sql = "DELETE FROM links WHERE item1id IN (" + ids + ") OR item2id IN (" + ids + ");";
+                // update db
+                var sql = "DELETE FROM links WHERE item1id IN (" + ids + ") OR item2id IN (" + ids + ");";
                 zotlink.DB.query(sql);
                 // also update the cache to reduce database access
                 for (var i = 0; i < ids.length; i++) {
@@ -55,6 +61,7 @@ Zotero.ZotLink = {
                         // temporarily stop listening to events
                         Zotero.Notifier.unregisterObserver(zotlink.observerID);
 
+                        // update the target
                         source.clone(false, target);
                         target.save();
 
@@ -66,15 +73,27 @@ Zotero.ZotLink = {
         },
     },
 
-    openDialog: function() {
+    promptCreateLink: function() {
+        // get selected items
         var selectedItems = ZoteroPane_Local.getSelectedItems();
-        window.openDialog("chrome://zotlink/content/makeLinkedCopy.xul",
+        // get destination library id and collection id
+        var io = {};
+        window.openDialog("chrome://zotlink/content/pickLinkDestination.xul",
                           "",
                           "chrome,centerscreen,modal,resizable=no",
-                          selectedItems);
+                          io);
+        var result = io.out;
+        // do nothing if user hit cancel
+        if (!result || !result.accepted) {
+            return;
+        }
+        // do the actual job
+        for (var i = 0; i < selectedItems.length; i++) {
+            this.createLinkedCopy(selectedItems[i], result.destLibraryID, result.destCollectionID);
+        }
     },
 
-    createLinkedCopy: function(source, targetLibraryID, targetCollectionID) {
+    createLinkedCopy: function(source, destLibraryID, destCollectionID) {
         // temporarily stop listening to events
         Zotero.Notifier.unregisterObserver(this.observerID);
 
@@ -83,18 +102,19 @@ Zotero.ZotLink = {
 
         newItem = new Zotero.Item(source.itemTypeID);
         // add the item to the target library
-        newItem.libraryID = targetLibraryID || null;
+        newItem.libraryID = destLibraryID || null;
         newItemID = newItem.save();
         newItem = Zotero.Items.get(newItemID);
         // copy over all the information
         source.clone(false, newItem);
         newItem.save();
         // add the item to the target collection
-        if (targetCollectionID) {
-            Zotero.Collections.get(targetCollectionID).addItem(newItemID);
+        if (destCollectionID) {
+            Zotero.Collections.get(destCollectionID).addItem(newItemID);
         }
 
         // 2. link them
+        // update db
         var sql = "INSERT INTO links VALUES (" + source.id + ", " + newItemID + ");";
         this.DB.query(sql);
         // also update the cache to reduce database access
@@ -104,21 +124,105 @@ Zotero.ZotLink = {
         this.observerID = Zotero.Notifier.registerObserver(this.observer, ["item"]);
     },
 
-    createLinkedCopies: function(sources, targetLibraryID, targetCollectionID) {
-        for (var i = 0; i < sources.length; i++) {
-            this.createLinkedCopy(sources[i], targetLibraryID, targetCollectionID);
+    promptLinkExisting: function() {
+        // get selected items
+        var selectedItems = ZoteroPane_Local.getSelectedItems();
+        // only allow single selection
+        if (selectedItems.length > 1) {
+            this.ps.alert(null,
+                          "Multiple Selections Not Allowed",
+                          "Only one source item is allowed at a time!");
+            return;
         }
+        // source item to link to
+        var source = selectedItems[0];
+
+        // select target items
+        var io = {};
+        window.openDialog("chrome://zotero/content/selectItemsDialog.xul", "", "chrome,modal", io);
+        var targets = io.dataOut;
+        // do nothing if user hit cancel or didn't select any item
+        if (!targets || !targets.length) {
+            return;
+        }
+
+        // confirm
+        var confirmed = this.ps.confirm(null,
+                                        "Are You Sure You Want to Continue?",
+                                        "The selected target items will be OVERWRITTEN by the source item.\n" +
+                                        "Make sure you already have important information backed-up!");
+        if (!confirmed) {
+            return;
+        }
+
+        // do the actual job
+        for (var i = 0; i < targets.length; i++) {
+            this.linkExistingItem(source, Zotero.Items.get(targets[i]));
+        }
+    },
+
+    linkExistingItem: function(source, target) {
+        // 1. check if linking is allowed
+        // i> target and source cannot be the same item
+        if (source.id === target.id) {
+            this.ps.alert(null,
+                          "Cannot Link Item to Itself",
+                          "Source item and target item cannot be the same item!\n" +
+                          "source: " + source.id + "; target: " + target.id);
+            return;
+        }
+        // ii> target and source cannot already be linked
+        var existingLinks = this.links.findLinks(source.id);
+        if (existingLinks && existingLinks.length) {
+            for (var i = 0; i < existingLinks.length; i++) {
+                if (existingLinks[i] === target.id) {
+                    this.ps.alert(null,
+                                  "Cannot Link Already Linked Items",
+                                  "Source item and target item are already linked!\n" +
+                                  "source: " + source.id + "; target: " + target.id);
+                    return;
+                }
+            }
+        }
+        // iii> target and source must be of the same item type
+        if (target.itemTypeID !== source.itemTypeID) {
+            this.ps.alert(null,
+                          "Cannot Link Different Types of Items",
+                          "Source item and target item must be of the same type!\n" +
+                          "source: " + source.id + "; target: " + target.id);
+            return;
+        }
+
+        // temporarily stop listening to events
+        Zotero.Notifier.unregisterObserver(this.observerID);
+
+        // 2. update target information
+        source.clone(false, target);
+        target.save();
+
+        // 3. link them
+        // update db
+        var sql = "INSERT INTO links VALUES (" + source.id + ", " + target.id + ");";
+        this.DB.query(sql);
+        // also update the cache to reduce database access
+        this.links.addLink([source.id, target.id]);
+
+        // resume listening to events
+        this.observerID = Zotero.Notifier.registerObserver(this.observer, ["item"]);
     },
 };
 
 window.addEventListener("load", function() { Zotero.ZotLink.init(); });
 
 
+/* implementation of graph data structure where nodes are the items and
+ * edges are the links
+ */
 function _LinkGraph(pairs) {
-    // build graph (as an adjacency list)
+    // the graph inner representation of the linked items (will build later)
     this.graph = {};
-    _buildGraph(pairs);
 
+    // connect linked pair in the graph
     this.addLink = function(pair) {
         var item1id = pair[0],
             item2id = pair[1];
@@ -190,9 +294,12 @@ function _LinkGraph(pairs) {
         }
     };
 
-    function _buildGraph(pairs) {
-        for (var i = 0; i < pairs; i++) {
-            this.addLink(pairs[i]);
+    // build graph (as an adjacency list)
+    this._buildGraph = function(pairs) {
+        // connect all pairs that are linked and that is our graph
+        for (var i = 0; i < pairs.length; i++) {
+            this.addLink([pairs[i].item1id, pairs[i].item2id]);
         }
-    }
+    };
+    this._buildGraph(pairs);
 }
