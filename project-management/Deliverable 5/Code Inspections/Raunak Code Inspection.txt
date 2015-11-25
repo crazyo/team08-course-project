@@ -1,0 +1,23 @@
+Reviewer: Raunak Mathur 
+Code: createField.js and last few functions in customItemPane.js used for the zotcustom_form plugin 
+Date of review: Tuesday November 24, 2015 
+Author: Elliot Cho and Wei Cong Su 
+
+• Bugs 
+    • No bugs found from code I reviewed
+	
+• Poor code logic 
+    • addNote function in customItemPane does not seem to be used anywhere yet.
+
+• Poor coding style 
+    • Proper coding style used. Was very clear to read.
+	
+• Missing documentation 
+    • Missing comments for all functions except openDialogue in customItemPane that I reviewed 
+	• Not many comments for other parts of code such as control statements and variable declarations
+
+• Unreadable code: 
+    • Code was easy to read and well spaced. Not very good use of variable names.
+	
+• Poor testing 
+    • No testing was implemented

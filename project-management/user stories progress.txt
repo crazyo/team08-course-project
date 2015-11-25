@@ -1,0 +1,4 @@
+Batch Editing - Complete
+Linking Items - Complete
+Custom Citations - Can create, save and install csl file with easy to use UI. Still need to implement upload feature.
+Custom Forms - Trouble with displaying newly added form. Other then that everything works.
