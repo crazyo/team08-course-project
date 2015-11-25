@@ -10,6 +10,8 @@ https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/
 - **-> Deliverable 5 Report: https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/d5.html <-**
 
 # Build Instructions:
+NOTE: ALL OUR CODE IS UNDER extensions/ DIRECTORY; src/ DIRECTORY CONTAINS ZOTERO SOURCE CODE.
+
 1. ***Make a copy of config.sh.seed and name the copy config.sh before following the instructions.***
 2. Follow instructions to build Zotero:
     https://www.zotero.org/support/dev/client_coding/building_the_standalone_client#building
