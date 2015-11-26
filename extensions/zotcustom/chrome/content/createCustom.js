@@ -18,16 +18,17 @@ var ZotCustom = new function() {
 		// Insert fields w/ values for selected item
 		var i;
 		for (i in selectedItem._itemData) {
-            var name = Zotero.ItemFields.getName(i);
+			if(selectedItem.getField(i) != ""){
+				var name = Zotero.ItemFields.getName(i);
+				// Insert
+				mylist.appendItem(name, name);
 
-			// Insert
-			mylist.appendItem(name, name)
-
-            //not too sure about this part..
-			if (name == 'version') {
-				// Changed in API v3 to avoid clash with 'version' above
-				// Remove this after https://github.com/zotero/zotero/issues/670
-				name = 'versionNumber';
+	            //not too sure about this part..
+				if (name == 'version') {
+					// Changed in API v3 to avoid clash with 'version' above
+					// Remove this after https://github.com/zotero/zotero/issues/670
+					name = 'versionNumber';
+				}
 			}
 		}
 
