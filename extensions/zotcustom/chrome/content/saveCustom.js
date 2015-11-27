@@ -46,6 +46,69 @@ var SaveCustom = new function() {
         //go through format fields and create csl using users output
         var i;
         for(i = 0; i < finalFormat.length-1; i++){
+
+            //make it the right value for text variable in csl
+            switch(finalFormat[i]){
+
+                case "url":
+                    finalFormat[i] = "URL";
+                    break;
+
+                case "series":
+                    finalFormat[i] = "Series";
+                    break;
+
+                case "seriesNumber":
+                    finalFormat[i] = "collection-number";
+
+                case "shortTitle":
+                    finalFormat[i] = "title-short";
+                    break;
+
+                case "notes":
+                    finalFormat[i] = "annote";
+                    break;
+
+                case "pages":
+                    finalFormat[i] = "page";
+                    break;
+
+                case "callNumber":
+                    finalFormat[i] = "call-number";
+                    break;
+
+                case "abstractNote":
+                    finalFormat[i] = "abstract";
+                    break;
+
+                case "numberOfVolumes":
+                    finalFormat[i] = "number-of-volumes";
+                    break;
+
+                case "archiveLocation":
+                    finalFormat[i] = "archive_location";
+                    break;
+
+                case "accessDate":
+                    finalFormat[i] = "accessed";
+                    break;
+
+                case "libraryCatalog":
+                    finalFormat[i] = "source";
+                    break;
+
+                /*case "dateAdded":
+                    finalFormat[i] = "titleshort";
+                    break;
+
+                 case "dateAdded":
+                    finalFormat[i] = "titleshort";
+                    break;
+
+                 case "dateAdded":
+                    finalFormat[i] = "titleshort";
+                    break;*/
+			}
             //check if there is a prefix
             if(!finalFormat[i][0].match("^[a-zA-Z\(\)]+$")){
                 finalCSL += '\n\t\t<text variable="' + finalFormat[i].slice(1) + '" prefix="' + finalFormat[i][0] + '"/>';
@@ -55,5 +118,5 @@ var SaveCustom = new function() {
         }
         finalCSL += '\n\t</layout>\n\t</bibliography>\n</style>';
         return finalCSL;
-    }
+	}
 }
