@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="never">
+	<info>
+		<title>customCSL</title>
+		<id>http://www.zotero.org/styles/customCSL</id>
+		<updated>2015-04-07T11:18:00+00:00</updated>
+	</info>
+	<bibliography et-al-min="6" et-al-use-first="1" second-field-align="flush" entry-spacing="0" line-spacing="2">
+	<layout>
+		<text variable="archive_location"/>
+		<text variable="libraryCatalog" prefix="."/>
+	</layout>
+	</bibliography>
+</style>

@@ -18,28 +18,23 @@ var ZotCustom = new function() {
 		// Insert fields w/ values for selected item
 		var i;
 		for (i in selectedItem._itemData) {
-            var name = Zotero.ItemFields.getName(i);
-			var val = selectedItem.getField(i);
+			//if(selectedItem.getField(i) != ""){
+				var name = Zotero.ItemFields.getName(i);
+				// Insert
+				mylist.appendItem(name, name);
 
-			// Insert
-			mylist.appendItem(name, name)
-
-            //not too sure about this part..
-			if (name == 'version') {
-				// Changed in API v3 to avoid clash with 'version' above
-				// Remove this after https://github.com/zotero/zotero/issues/670
-				name = 'versionNumber';
-			}
+	            //not too sure about this part..
+				if (name == 'version') {
+					// Changed in API v3 to avoid clash with 'version' above
+					// Remove this after https://github.com/zotero/zotero/issues/670
+					name = 'versionNumber';
+				}
+			//}
 		}
 
 		// Set list to updated
 		if (selectedItem) listUpdated = true;
 	};
-
-    //save the new citation and add it to the list of citation styles
-    this.saveCitation = function() {
-		window.openDialog("chrome://zotcustom/content/saveCustom.xul","", "chrome,centerscreen,modal,resizable=no");
-    }
 
 	/*
 	 * Returns the caret (cursor) position of the specified text field.
