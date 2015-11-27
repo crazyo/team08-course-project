@@ -46,21 +46,22 @@ Zotero.BatchEditing = {
         };
     },
 
-
     //Zotero.Tags endpoint
     renameTag: function(tagName, newTagName){
         var tagID = this.getTagIDFromName(tagName);
         Zotero.Tags.rename(tagID, newTagName);
     },
 
+    //Zotero.Tags endpoint
     deleteTag: function(tagName){
         var tagID = this.getTagIDFromName(tagName);
         Zotero.Tags.erase(tagID);
     },
 
+    // Batch adds tag to selected items.
     addTags: function(tagName){
         if (this.ps.confirm(null, "Confirm", "Confirm to add tag?")){
-            var items = ZoteroPane_Local.getSelectedItems();
+            var items = ZoteroPane.getSelectedItems();
 
             console.log(items);
 
@@ -85,8 +86,6 @@ Zotero.BatchEditing = {
 
                     Zotero.DB.commitTransaction();
 
-
-
                 // tagName doesnt exist. 
                 // TODO: impletement this feature.
                 } else{
@@ -99,8 +98,8 @@ Zotero.BatchEditing = {
 
     toggleAddTag: function(){
 
-        console.log("inaaa");
-        if (ZoteroPane_Local.getSelectedItems().length != 0){
+        //console.log((ZoteroPane.getSelectedItems()));
+        if (ZoteroPane.getSelectedItems().length != 0){
             document.getElementById("add-tags-menuitem").disabled = false;
         } else{
             document.getElementById("add-tags-menuitem").disabled = true;
