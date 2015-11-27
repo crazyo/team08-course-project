@@ -1,6 +1,5 @@
 /*
 	Bibliography file with Custom Citation Format extension modifications.
-	All changes made for the extension are prepended with a comment starting with 'CCF'.
 */
 
 var Zotero_File_Interface_Bibliography = new function() {
@@ -15,14 +14,14 @@ var Zotero_File_Interface_Bibliography = new function() {
 	 * loading
 	 */
 	 
-	 /* CCF
+	 /*
 	  *	Delete original groupboxes and items in bibliography creation menu, in order to
 	  *	allow the insertion of custom elements inside existing groupboxes (which had no IDs).
 	  */
 	 var index;
 	 var boxes = document.getElementsByTagName( "groupbox" );
-	 for (index = 0; index < 4; ++index) {
-		boxes[0].remove();
+	 for (index = boxes.length-1; index >= 0; --index) {
+		boxes[index].remove();
 	 }
 	 
 	this.init = function () {
@@ -214,6 +213,12 @@ var Zotero_File_Interface_Bibliography = new function() {
 			lastSelectedLocale
 		);
 	}
+	
+    this.openDialog = function() {
+        window.openDialog("chrome://zotcustom/content/createCustom.xul",
+                          "",
+                          "chrome,centerscreen,modal,resizable=no");
+    }
 
 	this.acceptSelection = function () {
 		// collect code

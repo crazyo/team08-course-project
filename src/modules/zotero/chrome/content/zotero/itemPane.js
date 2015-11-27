@@ -28,6 +28,16 @@ var ZoteroItemPane = new function() {
 	
 	var _lastItem, _itemBox, _notesLabel, _notesButton, _notesList, _tagsBox, _relatedBox;
 	
+	/*
+	*	Delete original tabpanels and items in item menu, in order to
+	*	allow the insertion of custom elements inside existing tabpanels (which had no IDs).
+	*/
+	var index;
+	var boxes = document.getElementsByTagName( "groupbox" );
+	for (index = boxes.length-1; index >= 0; --index) {
+		boxes[index].remove();
+	}
+	
 	function onLoad()
 	{
 		if (!Zotero || !Zotero.initialized) {
