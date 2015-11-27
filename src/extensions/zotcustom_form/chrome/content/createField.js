@@ -21,6 +21,15 @@ var createField = new function() {
         selectedItem[0]._itemData[fieldId_fieldscombined] = "";
         selectedItem[1].ref = selectedItem[0];
         selectedItem[2].viewItem(selectedItem[0], 'edit',0);
+
+        var rows = selectedItem[1]._dynamicFields;
+        var new_row = document.createElement("row");
+        var label = document.createElement("label");
+        label.setAttribute("fieldname", "test");
+        label.setAttribute("value", "Test: ");
+        new_row.appendChild(label);
+        rows.appendChild(new_row);
+
         console.log(Zotero.DB.query("SELECT * FROM customFields;"));
         console.log(field);
         console.log(selectedItem);
