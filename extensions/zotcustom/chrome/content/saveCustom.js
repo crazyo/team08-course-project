@@ -108,7 +108,7 @@ var SaveCustom = new function() {
                  case "dateAdded":
                     finalFormat[i] = "titleshort";
                     break;*/
-
+			}
             //check if there is a prefix
             if(!finalFormat[i][0].match("^[a-zA-Z\(\)]+$")){
                 finalCSL += '\n\t\t<text variable="' + finalFormat[i].slice(1) + '" prefix="' + finalFormat[i][0] + '"/>';
@@ -118,5 +118,5 @@ var SaveCustom = new function() {
         }
         finalCSL += '\n\t</layout>\n\t</bibliography>\n</style>';
         return finalCSL;
-    }
+	}
 }
