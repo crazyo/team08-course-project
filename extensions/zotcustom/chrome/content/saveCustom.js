@@ -47,76 +47,74 @@ var SaveCustom = new function() {
         var i;
         for(i = 0; i < finalFormat.length-1; i++){
 
-            //make it the right value for text variable in csl
-            switch(finalFormat[i]){
-
-                case "url":
-                    finalFormat[i] = "URL";
-                    break;
-
-                case "series":
-                    finalFormat[i] = "Series";
-                    break;
-
-                case "seriesNumber":
-                    finalFormat[i] = "collection-number";
-
-                case "shortTitle":
-                    finalFormat[i] = "title-short";
-                    break;
-
-                case "notes":
-                    finalFormat[i] = "annote";
-                    break;
-
-                case "pages":
-                    finalFormat[i] = "page";
-                    break;
-
-                case "callNumber":
-                    finalFormat[i] = "call-number";
-                    break;
-
-                case "abstractNote":
-                    finalFormat[i] = "abstract";
-                    break;
-
-                case "numberOfVolumes":
-                    finalFormat[i] = "number-of-volumes";
-                    break;
-
-                case "archiveLocation":
-                    finalFormat[i] = "archive_location";
-                    break;
-
-                case "accessDate":
-                    finalFormat[i] = "accessed";
-                    break;
-
-                case "libraryCatalog":
-                    finalFormat[i] = "source";
-                    break;
-
-                /*case "dateAdded":
-                    finalFormat[i] = "titleshort";
-                    break;
-
-                 case "dateAdded":
-                    finalFormat[i] = "titleshort";
-                    break;
-
-                 case "dateAdded":
-                    finalFormat[i] = "titleshort";
-                    break;*/
-			}
             //check if there is a prefix
             if(!finalFormat[i][0].match("^[a-zA-Z\(\)]+$")){
-                finalCSL += '\n\t\t<text variable="' + finalFormat[i].slice(1) + '" prefix="' + finalFormat[i][0] + '"/>';
+                finalCSL += '\n\t\t<text variable="' + this.changeTextVar(finalFormat[i].slice(1)) + '" prefix="' + finalFormat[i][0] + '"/>';
+				//finalCSL += '\n\t\t<text variable="' + finalFormat[i].slice(1) + '" prefix="' + finalFormat[i][0] + '"/>';
             }else{
-                finalCSL += '\n\t\t<text variable="' + finalFormat[i] + '"/>';
+                finalCSL += '\n\t\t<text variable="' + this.changeTextVar(finalFormat[i]) + '"/>';
             }
         }
         finalCSL += '\n\t</layout>\n\t</bibliography>\n</style>';
         return finalCSL;
+	}
+	
+	//handle special cases for text variables vs field name
+	this.changeTextVar = function(textVar){
+		var newTextVar;
+		//make it the right value for text variable in csl
+		switch(textVar){
+			case "url":
+				newTextVar = "URL";
+				break;
+
+			/* case "series":
+				newTextVar = "Series";
+				break; */
+
+			case "seriesNumber":
+				newTextVar = "collection-number";
+				break;
+				
+			case "shortTitle":
+				newTextVar = "title-short";
+				break;
+
+			case "notes":
+				newTextVar = "annote";
+				break;
+
+			case "pages":
+				newTextVar = "page";
+				break;
+
+			case "callNumber":
+				newTextVar = "call-number";
+				break;
+
+			case "abstractNote":
+				newTextVar = "abstract";
+				break;
+
+			case "numberOfVolumes":
+				newTextVar = "number-of-volumes";
+				break;
+
+			case "archiveLocation":
+				newTextVar = "archive_location";
+				break;
+
+			case "accessDate":
+				newTextVar = "accessed";
+				break;
+
+			case "libraryCatalog":
+				newTextVar = "source";
+				break;
+			
+			default:
+				return textVar;
+		}	
+		return newTextVar;
 	}
 }
