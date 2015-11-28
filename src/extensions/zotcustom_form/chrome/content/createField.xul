@@ -4,7 +4,8 @@
 <dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
 		id="zotcustom_field"
 		title="Custom Field" buttons="cancel,accept"
-		ondialogaccept = "createField.add();">
+		onload = "Zotero.CustomForms.init();"
+		ondialogaccept = "Zotero.CustomForms.createField();">
 
 	<script src="chrome://zotero/content/include.js"/>
 	<script src="chrome://zotcustom_form/content/createField.js"/>

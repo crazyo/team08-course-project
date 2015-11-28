@@ -4,36 +4,56 @@
 
 // Console Tool; Remove after done:
 Components.utils.import("resource://gre/modules/devtools/Console.jsm");
+Zotero.CustomForms = {
+        DB: null,
+        values: null,
 
-var createField = new function() {
-	this.add = function () {
-	var selectedItem = window.arguments[0];
-        var textbox = document.getElementById('new_field');
-        var field = textbox.value.replace(/\s+/g, '');
-        //var nextFieldID = Zotero.DB.getNextID("fieldsCombined","fieldID");
-        //Zotero.DB.query("INSERT INTO fieldsCombined VALUES (?, ?, ?, ?, ?)",[nextFieldID,textbox.value,null, null,1]);
-        var fieldID = Zotero.ID.get('customFields');
-        Zotero.DB.query("INSERT INTO customFields VALUES (?, ?, ?)", [fieldID, field.toLowerCase(), textbox.value]);
-        Zotero.Schema.updateCustomTables();
-        var fieldscombined_item = Zotero.DB.query('SELECT fieldID FROM fieldsCombined WHERE fieldName = (?)',[field.toLowerCase()])
-        var fieldId_fieldscombined = fieldscombined_item[0].fieldID;
-        console.log(fieldId_fieldscombined);
-        selectedItem[0]._itemData[fieldId_fieldscombined] = "";
-        selectedItem[1].ref = selectedItem[0];
-        selectedItem[2].viewItem(selectedItem[0], 'edit',0);
+        init: function() { 
+                this.DB = new Zotero.DBConnection("CustomForms");
+                if (!this.DB.tableExists("customfieldsvalues")) {
+                    this.DB.query("CREATE TABLE customfieldsvalues (itemID INT,fieldID INT, value TEXT);");
+                }
+                var sql = "SELECT * FROM customfieldsvalues;";
+                //load custom fields into items
+                var values = this.DB.query(sql);
+                var currItem = [];
+                for (currItem in this.values)
+                    {
+                        try {
+                                Zotero.item.getElementById(currItem[0])._itemData[currItem[1]] = currItem[2];
+                         }
+                         catch(err) {
+                                        }
+                    }
+        },
 
-        var rows = selectedItem[1]._dynamicFields;
-        var new_row = document.createElement("row");
-        var label = document.createElement("label");
-        label.setAttribute("fieldname", "test");
-        label.setAttribute("value", "Test: ");
-        new_row.appendChild(label);
-        rows.appendChild(new_row);
-
-        console.log(Zotero.DB.query("SELECT * FROM customFields;"));
-        console.log(field);
-        console.log(selectedItem);
-        console.log(Zotero.DB.query('SELECT * FROM fieldsCombined'));
-        //Zotero.ItemFields._loadFields();
-	};
-}
+        createField:function() {
+        	var selectedItem = window.arguments[0];
+            var textbox = document.getElementById('new_field');
+            // get rid of blank spaces
+            var field = textbox.value.replace(/\s+/g, '');
+            // get next id available
+            var fieldID = Zotero.ID.get('customFields');
+            Zotero.DB.query("INSERT INTO customFields VALUES (?, ?, ?)", [fieldID, field.toLowerCase(), textbox.value]);
+            Zotero.Schema.updateCustomTables();
+            // get the id of our field after merge
+            var fieldscombined_item = Zotero.DB.query('SELECT fieldID FROM fieldsCombined WHERE fieldName = (?)',[field.toLowerCase()]);
+            var fieldId_fieldscombined = fieldscombined_item[0].fieldID;
+            var def = 'default';
+            selectedItem[0]._itemData[fieldId_fieldscombined] = def;
+            //insert it into our own database
+            this.DB.query("INSERT INTO customfieldsvalues VALUES (?, ?, ?)", [selectedItem[0].getID(), fieldId_fieldscombined, def]);
+            var rows = selectedItem[1]._dynamicFields;
+            var new_row = document.createElement("row");
+            var label = document.createElement("label");
+            label.setAttribute("fieldname", fieldId_fieldscombined);
+            label.setAttribute("value", textbox.value + ": ");
+            new_row.appendChild(label);
+            rows.appendChild(new_row);
+            console.log(fieldId_fieldscombined);
+            console.log(Zotero.DB.query("SELECT * FROM customFields;"));
+            console.log(field);
+            console.log(selectedItem);
+            console.log(Zotero.DB.query('SELECT * FROM fieldsCombined'));
+        },
+};
