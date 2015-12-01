@@ -277,7 +277,7 @@ var ZoteroItemPane = new function() {
     	window.console.log(vbox);
     	vbox.parentNode.replaceChild(tb,vbox);
     	window.console.log(tb);
-
+    	
     };
     this.hide_editor = function(textbox){
     	window.console.log("in hide_editor")

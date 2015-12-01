@@ -7,8 +7,8 @@ Components.utils.import("resource://gre/modules/devtools/Console.jsm");
 Zotero.CustomForms = {
         DB: null,
         values: null,
-
         init: function() { 
+                window.console.log("running init");
                 this.DB = new Zotero.DBConnection("CustomForms");
                 if (!this.DB.tableExists("customfieldsvalues")) {
                     this.DB.query("CREATE TABLE customfieldsvalues (itemID INT,fieldID INT, value TEXT);");
@@ -27,8 +27,10 @@ Zotero.CustomForms = {
                     }
         },
         createField:function() {
+            Zotero.CustomForms.init();
         	var selectedItem = window.arguments[0];
             var textbox = document.getElementById('new_field');
+            var field_value = document.getElementById('new_field_value');
             // get rid of blank spaces
             var field = textbox.value.replace(/\s+/g, '');
             // get next id available
@@ -42,7 +44,7 @@ Zotero.CustomForms = {
             selectedItem[0]._itemData[fieldId_fieldscombined] = def;
             //insert it into our own database
             console.log(selectedItem);
-            this.DB.query("INSERT INTO customfieldsvalues VALUES (?, ?, ?)", [selectedItem[0].getID(), fieldId_fieldscombined, def]);
+            this.DB.query("INSERT INTO customfieldsvalues VALUES (?, ?, ?)", [selectedItem[0].getID(), fieldId_fieldscombined, field_value.value]);
             selectedItem[2].viewItem(selectedItem[0], 'edit', 0);
         },
 
