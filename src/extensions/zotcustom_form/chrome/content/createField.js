@@ -41,20 +41,9 @@ Zotero.CustomForms = {
             var def = 'default';
             selectedItem[0]._itemData[fieldId_fieldscombined] = def;
             //insert it into our own database
-            this.DB.query("INSERT INTO customfieldsvalues VALUES (?, ?, ?)", [selectedItem[0].getID(), fieldId_fieldscombined, def]);
-            var rows = selectedItem[1]._dynamicFields;
-            var new_row = document.createElement("row");
-            var label = document.createElement("label");
-            label.setAttribute("fieldname", fieldId_fieldscombined);
-            label.setAttribute("value", textbox.value + ": ");
-            new_row.appendChild(label);
-            rows.appendChild(new_row);
-            console.log(fieldId_fieldscombined);
-            console.log(Zotero.DB.query("SELECT * FROM customFields;"));
-            console.log(field);
             console.log(selectedItem);
-            console.log(Zotero.DB.query('SELECT * FROM fieldsCombined'));
-            console.log(this.DB.query('SELECT * FROM customfieldsvalues'));
+            this.DB.query("INSERT INTO customfieldsvalues VALUES (?, ?, ?)", [selectedItem[0].getID(), fieldId_fieldscombined, def]);
+            selectedItem[2].viewItem(selectedItem[0], 'edit', 0);
         },
 
 };

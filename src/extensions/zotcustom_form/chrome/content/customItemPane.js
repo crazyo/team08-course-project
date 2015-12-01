@@ -41,7 +41,7 @@ var ZoteroItemPane = new function() {
 		_notesList = document.getElementById('zotero-editpane-dynamic-notes');
 		_tagsBox = document.getElementById('zotero-editpane-tags');
 		_relatedBox = document.getElementById('zotero-editpane-related');
-		
+		Zotero.CustomForms.init();
 	}
 	
 	// Extension addition: Creates tab items with extra add button inserted
@@ -181,19 +181,40 @@ var ZoteroItemPane = new function() {
 		}
 		box.item = item;
 		if (index == 0){
-			Zotero.CustomForms.init();
-			var customfields = Zotero.CustomForms.DB.query("SELECT fieldID,value FROM customfieldsvalues WHERE itemID = (?)",item.getID());
-			for (current in customfields){
+			var customfields = Zotero.CustomForms.DB.query("SELECT fieldID,value FROM customfieldsvalues WHERE itemID =? ",item.getID());
+			window.console.log(box);
+			for each(var current in customfields){
 				var row = box._dynamicFields;
 		        var new_row = document.createElement("row");
 		        var label = document.createElement("label");
-		        var fieldnameandlabel = Zotero.DB.query("SELECT fieldname,label FROM fieldsCombined WHERE fieldID = (?)",current[0]);
-		        var fieldvalue = current[1];
-		        label.setAttribute("fieldname", fieldnameandlabel[0]);
-		        label.setAttribute("value", fieldnameandlabel[1] + ": ");
+		        var fieldnameandlabel = Zotero.DB.query("SELECT fieldname,label FROM fieldsCombined WHERE fieldID = ?",current.fieldID);
+		        label.setAttribute("fieldname", fieldnameandlabel[0].fieldName);
+		        label.setAttribute("value", fieldnameandlabel[0].label + ": ");
+		        label.setAttribute("onclick","if (this.nextSibling.getAttribute('type') == 'textbox') { ZoteroItemPane.hide_editor(this.nextSibling);}");
+		        var vbox = document.createElement("vbox");
+		        vbox.setAttribute("class", "zotero-clicky");
+		        vbox.setAttribute("fieldname", fieldnameandlabel[0].fieldName);
+		        vbox.setAttribute("flex","1");
+		        vbox.setAttribute("type","vbox");
+		        box._tabIndexMaxFields = box._tabIndexMaxFields + 1;
+		        vbox.setAttribute("ztabindex",box._tabIndexMaxFields);
+		        var desc = document.createElement("description");
+            	var msgParts = current.value.split("\n\n");
+				for (var i=0; i<msgParts.length; i++) {
+					var desc = document.createElement('description');
+					desc.appendChild(document.createTextNode(msgParts[i]));
+					vbox.appendChild(desc);
+				}
 		        new_row.appendChild(label);
+		        window.console.log(label.nextSibling);
+		        if (label.nextSibling)window.console.log(label.nextSibling.inputField);
+		  		new_row.appendChild(vbox);
 		        row.appendChild(new_row);
-		    	}
+		        vbox.parentNode = box;
+		        vbox.addEventListener('click', function (event) {
+							ZoteroItemPane.show_editor(this);
+						}, false);
+		    }
 		}
 	}
 	
@@ -240,6 +261,48 @@ var ZoteroItemPane = new function() {
                           "",
                           "chrome,centerscreen,modal,resizable=no",
                           selectedItems);
+    };
+
+    this.show_editor = function(vbox){
+    	var tb = document.createElement("textbox");
+    	window.console.log(vbox.getAttribute('fieldname'));
+    	tb.setAttribute("fieldname", vbox.getAttribute('fieldname'));
+        tb.setAttribute("flex", "1");
+        tb.setAttribute("multiline", "true");
+        tb.setAttribute("focused", "true");
+        tb.setAttribute("ztabindex",vbox.getAttribute("ztabindex"));
+        tb.setAttribute("type","textbox");
+        window.console.log(vbox.firstChild.firstChild.data);
+        tb.setAttribute("value",vbox.firstChild.firstChild.data);
+    	window.console.log(vbox);
+    	vbox.parentNode.replaceChild(tb,vbox);
+    	window.console.log(tb);
+
+    };
+    this.hide_editor = function(textbox){
+    	window.console.log("in hide_editor")
+    	var vbox = document.createElement("vbox");
+    	vbox.setAttribute("class", "zotero-clicky");
+		vbox.setAttribute("fieldname", textbox.getAttribute('fieldname'));
+        vbox.setAttribute("flex","1");
+        vbox.setAttribute("type","vbox");
+        vbox.setAttribute("ztabindex",textbox.getAttribute("ztabindex"));
+        var item_id = textbox.parentNode.parentNode.parentNode.parentNode.parentNode._item.getID();
+        var fieldscombined_item = Zotero.DB.query('SELECT fieldID FROM fieldsCombined WHERE fieldName = (?)',[textbox.getAttribute('fieldname')]);
+        var fieldId_fieldscombined = fieldscombined_item[0].fieldID;
+        Zotero.CustomForms.DB.query('DELETE FROM customfieldsvalues WHERE fieldID =' + fieldId_fieldscombined + " AND itemID =" + item_id);
+        Zotero.CustomForms.DB.query("INSERT INTO customfieldsvalues VALUES (?, ?, ?)", [item_id, fieldId_fieldscombined, textbox.value]);
+        var desc = document.createElement("description");
+    	var msgParts = textbox.value.split("\n\n");
+		for (var i=0; i<msgParts.length; i++) {
+			var desc = document.createElement('description');
+			desc.appendChild(document.createTextNode(msgParts[i]));
+			vbox.appendChild(desc);
+		}
+		vbox.addEventListener('click', function (event) {
+							ZoteroItemPane.show_editor(this);
+						}, false);
+		textbox.parentNode.replaceChild(vbox,textbox);
     };
 }
 addEventListener("load", function(e) { ZoteroItemPane.onLoad(e); }, false);
