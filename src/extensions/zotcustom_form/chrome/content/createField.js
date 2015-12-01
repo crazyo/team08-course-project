@@ -26,7 +26,6 @@ Zotero.CustomForms = {
                                         }
                     }
         },
-
         createField:function() {
         	var selectedItem = window.arguments[0];
             var textbox = document.getElementById('new_field');
@@ -55,5 +54,7 @@ Zotero.CustomForms = {
             console.log(field);
             console.log(selectedItem);
             console.log(Zotero.DB.query('SELECT * FROM fieldsCombined'));
+            console.log(this.DB.query('SELECT * FROM customfieldsvalues'));
         },
+
 };

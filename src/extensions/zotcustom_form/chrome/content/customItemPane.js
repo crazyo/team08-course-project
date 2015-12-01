@@ -79,23 +79,6 @@ var ZoteroItemPane = new function() {
 		for (i = 0; i < panelList.length; ++i) {
 			tabPanels.appendChild(panelList[i]);
 		}
-		// add customField rows for current item
-		if (_itemBox){
-			if(_itemBox._item){
-				var customfields = Zotero.DB.query("SELECT fieldID,value FROM customfieldsvalues WHERE itemID = (?)",[_itemBox._item._id]);
-				for (current in customfields){
-					var row = this._itemBox._dynamicFields;
-			        var new_row = document.createElement("row");
-			        var label = document.createElement("label");
-			        var fieldnameandlabel = Zotero.DB.query("SELECT fieldname,label FROM fieldsCombined WHERE fieldID = (?)",current[0]);
-			        var fieldvalue = current[1];
-			        label.setAttribute("fieldname", fieldnameandlabel[0]);
-			        label.setAttribute("value", fieldnameandlabel[1] + ": ");
-			        new_row.appendChild(label);
-			        row.appendChild(new_row);
-		    	}
-		    }
-	    }
 	}
 	
 	
@@ -197,6 +180,21 @@ var ZoteroItemPane = new function() {
 			box.mode = 'edit';
 		}
 		box.item = item;
+		if (index == 0){
+			Zotero.CustomForms.init();
+			var customfields = Zotero.CustomForms.DB.query("SELECT fieldID,value FROM customfieldsvalues WHERE itemID = (?)",item.getID());
+			for (current in customfields){
+				var row = box._dynamicFields;
+		        var new_row = document.createElement("row");
+		        var label = document.createElement("label");
+		        var fieldnameandlabel = Zotero.DB.query("SELECT fieldname,label FROM fieldsCombined WHERE fieldID = (?)",current[0]);
+		        var fieldvalue = current[1];
+		        label.setAttribute("fieldname", fieldnameandlabel[0]);
+		        label.setAttribute("value", fieldnameandlabel[1] + ": ");
+		        new_row.appendChild(label);
+		        row.appendChild(new_row);
+		    	}
+		}
 	}
 	
 	
