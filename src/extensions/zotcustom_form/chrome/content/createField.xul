@@ -4,7 +4,7 @@
 <dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
 		id="zotcustom_field"
 		title="Custom Field" buttons="cancel,accept"
-		ondialogaccept = "createField.add();">
+		ondialogaccept = "Zotero.CustomForms.createField();">
 
 	<script src="chrome://zotero/content/include.js"/>
 	<script src="chrome://zotcustom_form/content/createField.js"/>
@@ -13,6 +13,10 @@
 		<groupbox>
 			<caption label="Please enter a new field:"/>
 			<textbox id="new_field" value=""/>
+		</groupbox>
+		<groupbox>
+			<caption label="Please enter a value:"/>
+			<textbox id="new_field_value" value=""/>
 		</groupbox>
 	</vbox>
 </dialog>
