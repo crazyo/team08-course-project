@@ -181,6 +181,7 @@ var ZoteroItemPane = new function() {
 		}
 		box.item = item;
 		if (index == 0){
+			Zotero.CustomForms.init();
 			var customfields = Zotero.CustomForms.DB.query("SELECT fieldID,value FROM customfieldsvalues WHERE itemID =? ",item.getID());
 			window.console.log(box);
 			for each(var current in customfields){
