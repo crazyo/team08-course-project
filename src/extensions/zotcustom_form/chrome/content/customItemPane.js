@@ -55,6 +55,7 @@ var ZoteroItemPane = new function() {
 		var hbox = document.createElement("hbox");
 		var label = document.createElement("label");
 		var button = document.createElement("button");
+		var removeButton = document.createElement("button");
 		var itemBox = document.createElement("zoteroitembox");
 		
 		vbox.setAttribute("flex", 1);
@@ -64,11 +65,15 @@ var ZoteroItemPane = new function() {
 		button.setAttribute("id", "add_field");
 		button.setAttribute("label", "Add");
 		button.setAttribute("oncommand", "ZoteroItemPane.openDialog();");
+		removeButton.setAttribute("id", "remove_field");
+		removeButton.setAttribute("label", "Remove");
+		removeButton.setAttribute("oncommand", "ZoteroItemPane.removeDialog();");
 		itemBox.setAttribute("id", "zotero-editpane-item-box");
 		itemBox.setAttribute("flex", 1);
 		
 		hbox.appendChild(label);
 		hbox.appendChild(button);
+		hbox.appendChild(removeButton);
 		vbox.appendChild(hbox);
 		vbox.appendChild(itemBox);
 		tabPanel.appendChild(vbox);
@@ -183,38 +188,37 @@ var ZoteroItemPane = new function() {
 		if (index == 0){
 			Zotero.CustomForms.init();
 			var customfields = Zotero.CustomForms.DB.query("SELECT fieldID,value FROM customfieldsvalues WHERE itemID =? ",item.getID());
-			window.console.log(box);
-			for each(var current in customfields){
-				var row = box._dynamicFields;
-		        var new_row = document.createElement("row");
-		        var label = document.createElement("label");
-		        var fieldnameandlabel = Zotero.DB.query("SELECT fieldname,label FROM fieldsCombined WHERE fieldID = ?",current.fieldID);
-		        label.setAttribute("fieldname", fieldnameandlabel[0].fieldName);
-		        label.setAttribute("value", fieldnameandlabel[0].label + ": ");
-		        label.setAttribute("onclick","if (this.nextSibling.getAttribute('type') == 'textbox') { ZoteroItemPane.hide_editor(this.nextSibling);}");
-		        var vbox = document.createElement("vbox");
-		        vbox.setAttribute("class", "zotero-clicky");
-		        vbox.setAttribute("fieldname", fieldnameandlabel[0].fieldName);
-		        vbox.setAttribute("flex","1");
-		        vbox.setAttribute("type","vbox");
-		        box._tabIndexMaxFields = box._tabIndexMaxFields + 1;
-		        vbox.setAttribute("ztabindex",box._tabIndexMaxFields);
-		        var desc = document.createElement("description");
-            	var msgParts = current.value.split("\n\n");
-				for (var i=0; i<msgParts.length; i++) {
-					var desc = document.createElement('description');
-					desc.appendChild(document.createTextNode(msgParts[i]));
-					vbox.appendChild(desc);
-				}
-		        new_row.appendChild(label);
-		        window.console.log(label.nextSibling);
-		        if (label.nextSibling)window.console.log(label.nextSibling.inputField);
-		  		new_row.appendChild(vbox);
-		        row.appendChild(new_row);
-		        vbox.parentNode = box;
-		        vbox.addEventListener('click', function (event) {
-							ZoteroItemPane.show_editor(this);
-						}, false);
+			if (customfields){
+				for each(var current in customfields){
+					var row = box._dynamicFields;
+			        var new_row = document.createElement("row");
+			        var label = document.createElement("label");
+			        var fieldnameandlabel = Zotero.DB.query("SELECT fieldname,label FROM fieldsCombined WHERE fieldID =" + current.fieldID + " AND custom=1");
+			        label.setAttribute("fieldname", fieldnameandlabel[0].fieldName);
+			        label.setAttribute("value", fieldnameandlabel[0].label + ": ");
+			        label.setAttribute("onclick","if (this.nextSibling.getAttribute('type') == 'textbox') { ZoteroItemPane.hide_editor(this.nextSibling);}");
+			        var vbox = document.createElement("vbox");
+			        vbox.setAttribute("class", "zotero-clicky");
+			        vbox.setAttribute("fieldname", fieldnameandlabel[0].fieldName);
+			        vbox.setAttribute("flex","1");
+			        vbox.setAttribute("type","vbox");
+			        box._tabIndexMaxFields = box._tabIndexMaxFields + 1;
+			        vbox.setAttribute("ztabindex",box._tabIndexMaxFields);
+			        var desc = document.createElement("description");
+	            	var msgParts = current.value.split("\n\n");
+					for (var i=0; i<msgParts.length; i++) {
+						var desc = document.createElement('description');
+						desc.appendChild(document.createTextNode(msgParts[i]));
+						vbox.appendChild(desc);
+					}
+			        new_row.appendChild(label);
+			  		new_row.appendChild(vbox);
+			        row.appendChild(new_row);
+			        vbox.parentNode = box;
+			        vbox.addEventListener('click', function (event) {
+								ZoteroItemPane.show_editor(this);
+							}, false);
+		    	}
 		    }
 		}
 	}
@@ -263,25 +267,27 @@ var ZoteroItemPane = new function() {
                           "chrome,centerscreen,modal,resizable=no",
                           selectedItems);
     };
+    this.removeDialog = function(){
+    	var selectedItems = ZoteroPane_Local.getSelectedItems();
+    	window.openDialog("chrome://zotcustom_form/content/removeField.xul",
+                          "",
+                          "chrome,centerscreen,modal,resizable=no",
+                          selectedItems);
+    }
 
     this.show_editor = function(vbox){
     	var tb = document.createElement("textbox");
-    	window.console.log(vbox.getAttribute('fieldname'));
     	tb.setAttribute("fieldname", vbox.getAttribute('fieldname'));
         tb.setAttribute("flex", "1");
         tb.setAttribute("multiline", "true");
         tb.setAttribute("focused", "true");
         tb.setAttribute("ztabindex",vbox.getAttribute("ztabindex"));
         tb.setAttribute("type","textbox");
-        window.console.log(vbox.firstChild.firstChild.data);
         tb.setAttribute("value",vbox.firstChild.firstChild.data);
-    	window.console.log(vbox);
     	vbox.parentNode.replaceChild(tb,vbox);
-    	window.console.log(tb);
     	
     };
     this.hide_editor = function(textbox){
-    	window.console.log("in hide_editor")
     	var vbox = document.createElement("vbox");
     	vbox.setAttribute("class", "zotero-clicky");
 		vbox.setAttribute("fieldname", textbox.getAttribute('fieldname'));
