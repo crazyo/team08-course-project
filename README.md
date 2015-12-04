@@ -7,8 +7,9 @@ https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/
     (there is also a copy of everything in the repo under /project-management in case anything is broken on the website)
 - Deliverable 3 Report: https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/d3.html
 - Deliverable 4 Report: https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/d4.html
-- **-> Deliverable 5 Report: https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/d5.html <-**
-
+- Deliverable 5 Report: https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/d5.html
+- **-> Deliverable 6 Report: https://mathlab.utsc.utoronto.ca/courses/cscc01f15/wangxufe/d6.html <-**
+- 
 # Build Instructions:
 NOTE: ALL OUR CODE IS UNDER extensions/ DIRECTORY; src/ DIRECTORY CONTAINS ZOTERO SOURCE CODE.
 
